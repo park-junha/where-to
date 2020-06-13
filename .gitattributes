@@ -1,0 +1,3 @@
+ui/scripts/* linguist-detectable=false
+ui/config/* linguist-detectable=false
+ui/public/* linguist-detectable=false
