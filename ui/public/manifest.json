@@ -1,6 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "WhereTo",
+  "name": "Where To",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "description": "Customizable New Tab Extension",
+  "permissions": [],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
   "icons": [
     {
       "src": "favicon.ico",
