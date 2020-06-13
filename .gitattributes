@@ -1,0 +1,3 @@
+ui/config/* linguist-vendored
+ui/scripts/* linguist-vendored
+ui/public/* linguist-vendored
