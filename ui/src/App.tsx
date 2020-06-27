@@ -1,13 +1,13 @@
 import React, {
   Component
-, Suspense
-, lazy
+  , Suspense
+  , lazy
 } from 'react';
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import {
   AppContents
-, LandingPageLayout
+  , LandingPageLayout
 } from './interfaces';
 import './App.css';
 
@@ -30,7 +30,7 @@ const loadContents = (): AppContents => {
   }
   return {
     'main': main
-  , 'footer': []
+    , 'footer': []
   }
 }
 
@@ -39,13 +39,13 @@ const setDefaultContents = (): LandingPageLayout => {
     [
       {
         id: '100-000001'
-      , title: 'Netflix'
-      , url: 'https://www.netflix.com'
+        , title: 'Netflix'
+        , url: 'https://www.netflix.com'
       }
-    , {
+      , {
         id: '100-000002'
-      , title: 'Amazon'
-      , url: 'https://www.amazon.com'
+        , title: 'Amazon'
+        , url: 'https://www.amazon.com'
       }
     ]
   ]
@@ -54,7 +54,7 @@ const setDefaultContents = (): LandingPageLayout => {
 class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage'
-  , contents: loadContents()
+    , contents: loadContents()
   };
 
   renderComponent = (): JSX.Element => {

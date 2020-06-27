@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
   Nav
-, Navbar
-, Button
+  , Navbar
+  , Button
 //, Dropdown
 } from 'react-bootstrap';
 import {

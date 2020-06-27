@@ -3,9 +3,9 @@ import React, {
 } from 'react';
 import {
   Container
-, Button
-, Row
-, Col
+  , Button
+  , Row
+  , Col
 } from 'react-bootstrap';
 
 export default class LandingPage extends Component {
