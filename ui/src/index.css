@@ -12,3 +12,90 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.contents-main {
+  color: #fff;
+  margin: 8px 8px 75px 8px;
+}
+
+/* Landing page big button */
+.landing-button-big {
+  margin: 2px;
+  min-width: 244px;
+  max-width: 244px;
+  min-height: 120px;
+  max-height: 120px;
+}
+
+/* Landing page regular button */
+.landing-button {
+  margin: 2px;
+  min-width: 120px;
+  max-width: 120px;
+  min-height: 120px;
+  max-height: 120px;
+}
+
+/* Extra padding for text pages */
+.page-padding {
+  padding-top: 30px;
+}
+
+/* Align to center */
+.centered-text {
+  text-align: center;
+}
+
+/* Fade in contents from top */
+.fadein {
+  animation: fadeintop .5s;
+
+  /* Preserve style before and after animation */
+  animation-fill-mode: both;
+}
+
+/* For content to be fixed at center of page */
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+/* Delay fade in animation on loading spinner */
+.spinner {
+  animation-delay: 1s;
+}
+
+/* Fade in from top */
+@keyframes fadeintop {
+  from {
+    opacity: 0;
+    transform: translate(0, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+/* Footer */
+.footer-custom {
+  padding: 6px 12px;
+}
+
+.footer-dropdown {
+  background-color: #343a40;
+}
+
+.footer-button {
+  margin: 0px 3px;
+  padding: 6px 9px;
+}
+
+.footer-ioicon {
+  padding: 0px 0px 2px 0px;
+}
+
+.footer-item {
+  color: #fff;
+}

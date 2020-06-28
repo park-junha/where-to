@@ -7,8 +7,13 @@ import {
   , Row
   , Col
 } from 'react-bootstrap';
+import { LandingPageLayout } from '../interfaces';
 
-export default class LandingPage extends Component {
+interface Props {
+  contents: LandingPageLayout;
+}
+
+export default class LandingPage extends Component<Props> {
   render (): JSX.Element {
     return (
       <div className='fadein page-padding'>
@@ -25,22 +30,23 @@ export default class LandingPage extends Component {
             <Col />
             <Col xs={12}>
               <div>
-                <div>
-                  <Button
-                    className='landing-button-big'
-                    size='lg'
-                    variant='secondary'
-                  >
-                    Leetcode
-                  </Button>
-                  <Button
-                    className='landing-button-big'
-                    size='lg'
-                    variant='secondary'
-                  >
-                    Netflix
-                  </Button>
-                </div>
+                {this.props.contents.map((contentRow) => (
+                  <div>
+                    {contentRow.map((content) => (
+                      <a
+                        href={content.url}
+                      >
+                        <Button
+                          className='landing-button-big'
+                          size='lg'
+                          variant='secondary'
+                        >
+                          <span>{content.title}</span>
+                        </Button>
+                      </a>
+                    ))}
+                  </div>
+                ))}
               </div>
             </Col>
             <Col />

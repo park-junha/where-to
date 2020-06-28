@@ -4,16 +4,12 @@ export interface AppContents {
 }
 
 export interface LandingPageLayout extends Array<LandingPageItems>{};
-export interface LandingPageItems extends Array<LandingPageLink | LandingPageWidget>{};
+export interface LandingPageItems extends Array<LandingPageLink>{};
 
 export interface LandingPageLink {
   id: string;
   title: string;
   url: string;
-}
-export interface LandingPageWidget {
-  id: string;
-  title: string;
 }
 
 export interface FooterLayout extends Array<FooterItem>{};

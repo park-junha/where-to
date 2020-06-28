@@ -9,7 +9,6 @@ import {
   AppContents
   , LandingPageLayout
 } from './interfaces';
-import './App.css';
 
 interface State {
   component: string;
@@ -22,7 +21,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
 const loadContents = (): AppContents => {
   let storedContents = localStorage.getItem('contentsMain');
   let main = [];
-  if (typeof storedContents === null) {
+  if (storedContents === null) {
     main = setDefaultContents();
     localStorage.setItem('contentsMain', JSON.stringify(main));
   } else {
@@ -39,13 +38,23 @@ const setDefaultContents = (): LandingPageLayout => {
     [
       {
         id: '100-000001'
-        , title: 'Netflix'
-        , url: 'https://www.netflix.com'
+        , title: 'Facebook'
+        , url: 'https://www.facebook.com'
       }
       , {
         id: '100-000002'
         , title: 'Amazon'
         , url: 'https://www.amazon.com'
+      }
+      , {
+        id: '100-000003'
+        , title: 'Netflix'
+        , url: 'https://www.netflix.com'
+      }
+      , {
+        id: '100-000004'
+        , title: 'Google'
+        , url: 'https://www.google.com'
       }
     ]
   ]
@@ -61,7 +70,9 @@ class App extends Component<{}, State> {
     switch(this.state.component) {
     case 'LandingPage':
       return (
-        <LandingPage />
+        <LandingPage
+          contents={this.state.contents.main}
+        />
       );
     default:
       return (
