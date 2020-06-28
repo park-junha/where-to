@@ -6,7 +6,7 @@ export interface AppContents {
 export interface LandingPageItems extends Array<LandingPageItem>{};
 
 export interface LandingPageItem {
-  type: 'webportal';
+  type: string;
   id: string;
   title: string;
   url: string;

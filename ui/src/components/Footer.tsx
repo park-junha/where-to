@@ -8,8 +8,15 @@ import {
 import {
   IoLogoGithub
 } from 'react-icons/io';
+import {
+  AiOutlinePlus
+} from 'react-icons/ai';
 
-export default class Footer extends Component<{}, {}> {
+interface Props {
+  showNewItemModal: () => void;
+}
+
+export default class Footer extends Component<Props, {}> {
   render () {
     return (
       <div>
@@ -20,6 +27,15 @@ export default class Footer extends Component<{}, {}> {
           variant='dark'
         >
           <Nav className='justify-content-left'>
+            <Nav.Item>
+              <Button
+                variant='dark'
+                className='footer-button'
+                onClick={() => this.props.showNewItemModal()}
+              >
+                <AiOutlinePlus />
+              </Button>
+            </Nav.Item>
           </Nav>
           <Navbar.Collapse className='justify-content-end'>
             <Nav.Item>

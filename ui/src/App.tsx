@@ -3,16 +3,22 @@ import React, {
   , Suspense
   , lazy
 } from 'react';
+
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
+import NewItemModal from './components/NewItemModal';
 import {
   AppContents
   , LandingPageItems
 } from './interfaces';
+import {
+  DEFAULT_PORTALS
+} from './locales';
 
 interface State {
   component: string;
   contents: AppContents;
+  showNewItemModal: boolean;
 }
 
 const LandingPage = lazy(() => import('./components/LandingPage'));
@@ -34,38 +40,14 @@ const loadContents = (): AppContents => {
 }
 
 const setDefaultContents = (): LandingPageItems => {
-  return [
-    {
-      id: '100-000001'
-      , type: 'webportal'
-      , title: 'Facebook'
-      , url: 'https://www.facebook.com'
-    }
-    , {
-      id: '100-000002'
-      , type: 'webportal'
-      , title: 'Amazon'
-      , url: 'https://www.amazon.com'
-    }
-    , {
-      id: '100-000003'
-      , type: 'webportal'
-      , title: 'Netflix'
-      , url: 'https://www.netflix.com'
-    }
-    , {
-      id: '100-000004'
-      , type: 'webportal'
-      , title: 'Google'
-      , url: 'https://www.google.com'
-    }
-  ]
+  return DEFAULT_PORTALS ?? [];
 }
 
 class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage'
     , contents: loadContents()
+    , showNewItemModal: false
   };
 
   renderComponent = (): JSX.Element => {
@@ -83,6 +65,18 @@ class App extends Component<{}, State> {
     }
   };
 
+  showNewItemModal = (): void => {
+    this.setState({
+      showNewItemModal: true
+    });
+  }
+
+  hideModal = (): void => {
+    this.setState({
+      showNewItemModal: false
+    });
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -95,7 +89,13 @@ class App extends Component<{}, State> {
             {this.renderComponent()}
           </Suspense>
         </div>
-        <Footer />
+        <Footer
+          showNewItemModal={this.showNewItemModal}
+        />
+        <NewItemModal
+          showModal={this.state.showNewItemModal}
+          hideModal={this.hideModal}
+        />
       </div>
     );
   }

@@ -18,6 +18,12 @@ code {
   margin: 8px 8px 75px 8px;
 }
 
+.new-item-modal {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  border-color: #2a2a2a;
+  color: #fff;
+}
+
 /* Landing page big button */
 .landing-button-big {
   margin: 2px;
