@@ -4,9 +4,10 @@ export interface AppContents {
 }
 
 export interface LandingPageLayout extends Array<LandingPageItems>{};
-export interface LandingPageItems extends Array<LandingPageLink>{};
+export interface LandingPageItems extends Array<LandingPageItem>{};
 
-export interface LandingPageLink {
+export interface LandingPageItem {
+  type: 'webportal';
   id: string;
   title: string;
   url: string;

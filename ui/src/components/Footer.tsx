@@ -23,12 +23,18 @@ export default class Footer extends Component<{}, {}> {
           </Nav>
           <Navbar.Collapse className='justify-content-end'>
             <Nav.Item>
-              <Button
-                variant='dark'
-                className='footer-button'
+              <a
+                href='https://github.com/park-junha/WhereTo'
+                target='_blank'
+                rel='noopener noreferrer'
               >
-                <IoLogoGithub className='footer-ioicon' />
-              </Button>
+                <Button
+                  variant='dark'
+                  className='footer-button'
+                >
+                  <IoLogoGithub className='footer-ioicon' />
+                </Button>
+              </a>
             </Nav.Item>
           </Navbar.Collapse>
         </Navbar>

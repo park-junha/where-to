@@ -7,13 +7,40 @@ import {
   , Row
   , Col
 } from 'react-bootstrap';
-import { LandingPageLayout } from '../interfaces';
+
+import WebPortal from './WebPortal';
+import {
+  LandingPageLayout
+  , LandingPageItem
+} from '../interfaces';
 
 interface Props {
   contents: LandingPageLayout;
 }
 
 export default class LandingPage extends Component<Props> {
+  renderItem = (item: LandingPageItem): JSX.Element => {
+    switch (item.type) {
+    case 'webportal':
+      return (
+        <WebPortal
+          item={item}
+        />
+      );
+    default:
+      return (
+        <Button
+          className='landing-button-big'
+          size='lg'
+          variant='dark'
+          disabled
+        >
+          <span>N/A</span>
+        </Button>
+      )
+    }
+  }
+
   render (): JSX.Element {
     return (
       <div className='fadein page-padding'>
@@ -32,19 +59,7 @@ export default class LandingPage extends Component<Props> {
               <div>
                 {this.props.contents.map((contentRow) => (
                   <div>
-                    {contentRow.map((content) => (
-                      <a
-                        href={content.url}
-                      >
-                        <Button
-                          className='landing-button-big'
-                          size='lg'
-                          variant='secondary'
-                        >
-                          <span>{content.title}</span>
-                        </Button>
-                      </a>
-                    ))}
+                    {contentRow.map((item) => this.renderItem(item))}
                   </div>
                 ))}
               </div>
