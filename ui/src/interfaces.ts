@@ -1,9 +1,8 @@
 export interface AppContents {
-  main: LandingPageLayout;
+  main: LandingPageItems;
   footer: FooterLayout;
 }
 
-export interface LandingPageLayout extends Array<LandingPageItems>{};
 export interface LandingPageItems extends Array<LandingPageItem>{};
 
 export interface LandingPageItem {

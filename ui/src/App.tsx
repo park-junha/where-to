@@ -7,7 +7,7 @@ import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import {
   AppContents
-  , LandingPageLayout
+  , LandingPageItems
 } from './interfaces';
 
 interface State {
@@ -33,34 +33,32 @@ const loadContents = (): AppContents => {
   }
 }
 
-const setDefaultContents = (): LandingPageLayout => {
+const setDefaultContents = (): LandingPageItems => {
   return [
-    [
-      {
-        id: '100-000001'
-        , type: 'webportal'
-        , title: 'Facebook'
-        , url: 'https://www.facebook.com'
-      }
-      , {
-        id: '100-000002'
-        , type: 'webportal'
-        , title: 'Amazon'
-        , url: 'https://www.amazon.com'
-      }
-      , {
-        id: '100-000003'
-        , type: 'webportal'
-        , title: 'Netflix'
-        , url: 'https://www.netflix.com'
-      }
-      , {
-        id: '100-000004'
-        , type: 'webportal'
-        , title: 'Google'
-        , url: 'https://www.google.com'
-      }
-    ]
+    {
+      id: '100-000001'
+      , type: 'webportal'
+      , title: 'Facebook'
+      , url: 'https://www.facebook.com'
+    }
+    , {
+      id: '100-000002'
+      , type: 'webportal'
+      , title: 'Amazon'
+      , url: 'https://www.amazon.com'
+    }
+    , {
+      id: '100-000003'
+      , type: 'webportal'
+      , title: 'Netflix'
+      , url: 'https://www.netflix.com'
+    }
+    , {
+      id: '100-000004'
+      , type: 'webportal'
+      , title: 'Google'
+      , url: 'https://www.google.com'
+    }
   ]
 }
 

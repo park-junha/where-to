@@ -10,12 +10,12 @@ import {
 
 import WebPortal from './WebPortal';
 import {
-  LandingPageLayout
+  LandingPageItems
   , LandingPageItem
 } from '../interfaces';
 
 interface Props {
-  contents: LandingPageLayout;
+  contents: LandingPageItems;
 }
 
 export default class LandingPage extends Component<Props> {
@@ -39,7 +39,7 @@ export default class LandingPage extends Component<Props> {
         </Button>
       )
     }
-  }
+  };
 
   render (): JSX.Element {
     return (
@@ -56,13 +56,9 @@ export default class LandingPage extends Component<Props> {
           <Row>
             <Col />
             <Col xs={12}>
-              <div>
-                {this.props.contents.map((contentRow) => (
-                  <div>
-                    {contentRow.map((item) => this.renderItem(item))}
-                  </div>
-                ))}
-              </div>
+              {this.props.contents.map(
+                (item) => this.renderItem(item)
+              )}
             </Col>
             <Col />
           </Row>
