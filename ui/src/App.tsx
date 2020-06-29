@@ -10,6 +10,7 @@ import NewItemModal from './components/NewItemModal';
 import {
   AppContents
   , LandingPageItems
+  , NewPortalForm
 } from './interfaces';
 import {
   DEFAULT_PORTALS
@@ -77,6 +78,27 @@ class App extends Component<{}, State> {
     });
   };
 
+  saveCurrentState = (): void => {
+    localStorage.setItem('contentsMain',
+      JSON.stringify(this.state.contents.main));
+  };
+
+  createNewWebPortal = (portal: NewPortalForm): void => {
+    this.setState(prevState => ({
+      ...prevState
+      , contents: {
+        ...prevState.contents
+        , main: [
+          ...prevState.contents.main
+          , {
+            ...portal
+            , id: 'a'
+          }
+        ]
+      }
+    }), this.saveCurrentState);
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -95,6 +117,7 @@ class App extends Component<{}, State> {
         <NewItemModal
           showModal={this.state.showNewItemModal}
           hideModal={this.hideModal}
+          createNewWebPortal={this.createNewWebPortal}
         />
       </div>
     );

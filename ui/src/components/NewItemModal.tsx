@@ -9,11 +9,15 @@ import {
 } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
+import {
+  NewPortalForm
+} from '../interfaces';
 import { PORTALS } from '../locales';
 
 interface Props {
   showModal: boolean;
   hideModal: () => void;
+  createNewWebPortal: (portal: NewPortalForm) => void;
 }
 
 interface State {
@@ -25,6 +29,10 @@ interface NewWebPortalOptionsState {
   url: string;
 }
 
+interface NewWebPortalOptionsProps {
+  createNewWebPortal: (portal: NewPortalForm) => void;
+}
+
 export default class NewItemModal extends Component<Props, State> {
   state: State = {
     portalType: PORTALS[0].name ?? 'N/A'
@@ -33,7 +41,11 @@ export default class NewItemModal extends Component<Props, State> {
   renderOptions = (): JSX.Element => {
     switch(this.state.portalType) {
     case 'webportal':
-      return <NewWebPortalOptions />
+      return (
+        <NewWebPortalOptions
+          createNewWebPortal={this.props.createNewWebPortal}
+        />
+      );
     default:
       return (
         <div>
@@ -89,8 +101,9 @@ export default class NewItemModal extends Component<Props, State> {
   };
 }
 
-class NewWebPortalOptions extends Component<{}, NewWebPortalOptionsState> {
-  constructor(props: {}) {
+class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
+  , NewWebPortalOptionsState> {
+  constructor(props: NewWebPortalOptionsProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   };
@@ -102,7 +115,6 @@ class NewWebPortalOptions extends Component<{}, NewWebPortalOptionsState> {
 
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const target = event.target;
-    console.log(event.target);
     const name = target.name;
     this.setState({
       [name]: target.value
@@ -141,7 +153,14 @@ class NewWebPortalOptions extends Component<{}, NewWebPortalOptionsState> {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Button variant='primary' type='submit'>
+          <Button
+            variant='primary'
+            onClick={() => this.props.createNewWebPortal({
+              title: this.state.title
+              , type: 'webportal'
+              , url: this.state.url
+            })}
+          >
             Create
           </Button>
         </Form>
