@@ -70,8 +70,13 @@ export default class RemovePortal extends Component<Props, State> {
       return (
         <Button
           className='landing-button-big shake-portal'
+          style={{
+            animationDelay: delay
+            , animationDuration: duration
+          }}
           size='lg'
           variant='dark'
+          onClick={() => this.props.removeWebPortal(item.id)}
         >
           <span>N/A</span>
         </Button>
