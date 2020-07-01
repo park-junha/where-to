@@ -9,6 +9,7 @@ import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
 import RemovePortals from './components/RemovePortals';
+import ResetPortals from './components/ResetPortals';
 import NewItemModal from './components/NewItemModal';
 import {
   AppContents
@@ -21,6 +22,7 @@ interface State {
   component: string;
   contents: AppContents;
   showNewItemModal: boolean;
+  showResetModal: boolean;
 }
 
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -49,6 +51,7 @@ class App extends Component<{}, State> {
     component: 'LandingPage'
     , contents: loadContents()
     , showNewItemModal: false
+    , showResetModal: false
   };
 
   renderComponent = (): JSX.Element => {
@@ -86,9 +89,21 @@ class App extends Component<{}, State> {
     });
   }
 
-  hideModal = (): void => {
+  hideNewItemModal = (): void => {
     this.setState({
       showNewItemModal: false
+    });
+  };
+
+  showResetModal = (): void => {
+    this.setState({
+      showResetModal: true
+    });
+  }
+
+  hideResetModal = (): void => {
+    this.setState({
+      showResetModal: false
     });
   };
 
@@ -133,6 +148,15 @@ class App extends Component<{}, State> {
     }), this.saveCurrentState);
   };
 
+  resetPortals = (): void => {
+    localStorage.removeItem('contentsMain');
+    this.setState({
+      contents: loadContents()
+      , component: 'LandingPageNoFade'
+    });
+    this.hideResetModal();
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -148,12 +172,18 @@ class App extends Component<{}, State> {
         <Footer
           currentComponent={this.state.component}
           showNewItemModal={this.showNewItemModal}
+          showResetModal={this.showResetModal}
           switchComponent={this.switchComponent}
         />
         <NewItemModal
           showModal={this.state.showNewItemModal}
-          hideModal={this.hideModal}
+          hideModal={this.hideNewItemModal}
           createNewWebPortal={this.createNewWebPortal}
+        />
+        <ResetPortals
+          showModal={this.state.showResetModal}
+          hideModal={this.hideResetModal}
+          resetPortals={this.resetPortals}
         />
       </div>
     );

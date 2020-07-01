@@ -17,10 +17,14 @@ import {
 import {
   RiArrowGoBackLine
 } from 'react-icons/ri';
+import {
+  GrPowerReset
+} from 'react-icons/gr';
 
 interface Props {
   currentComponent: string;
   showNewItemModal: () => void;
+  showResetModal: () => void;
   switchComponent: (newComponent: string) => void;
 }
 
@@ -64,6 +68,19 @@ export default class Footer extends Component<Props, {}> {
                   <BsTrash />
                 </Button>
               )}
+            </Nav.Item>
+            <Nav.Item>
+              <Button
+                variant='dark'
+                className='footer-button'
+                onClick={() => this.props.showResetModal()}
+              >
+                <GrPowerReset
+                  style={{
+                    filter: 'invert(100%)'
+                  }}
+                />
+              </Button>
             </Nav.Item>
           </Nav>
           <Navbar.Collapse className='justify-content-end'>
