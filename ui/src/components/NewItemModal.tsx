@@ -31,6 +31,7 @@ interface NewWebPortalOptionsState {
 
 interface NewWebPortalOptionsProps {
   createNewWebPortal: (portal: NewPortalForm) => void;
+  hideModal: () => void;
 }
 
 export default class NewItemModal extends Component<Props, State> {
@@ -44,6 +45,7 @@ export default class NewItemModal extends Component<Props, State> {
       return (
         <NewWebPortalOptions
           createNewWebPortal={this.props.createNewWebPortal}
+          hideModal={this.props.hideModal}
         />
       );
     default:
@@ -130,6 +132,15 @@ class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
       */
   };
 
+  createWebPortal = (): void => {
+    this.props.createNewWebPortal({
+      title: this.state.title
+      , type: 'webportal'
+      , url: this.state.url
+    });
+    this.props.hideModal();
+  };
+
   render (): JSX.Element {
     return (
       <div>
@@ -155,11 +166,7 @@ class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
           </Form.Group>
           <Button
             variant='primary'
-            onClick={() => this.props.createNewWebPortal({
-              title: this.state.title
-              , type: 'webportal'
-              , url: this.state.url
-            })}
+            onClick={this.createWebPortal}
           >
             Create
           </Button>
