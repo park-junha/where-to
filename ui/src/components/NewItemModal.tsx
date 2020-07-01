@@ -166,9 +166,17 @@ class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
           </Form.Group>
           <Button
             variant='primary'
+            className='horiz-spaced-buttons'
             onClick={this.createWebPortal}
           >
             Create
+          </Button>
+          <Button
+            variant='dark'
+            className='horiz-spaced-buttons'
+            onClick={this.props.hideModal}
+          >
+            Cancel
           </Button>
         </Form>
       </div>

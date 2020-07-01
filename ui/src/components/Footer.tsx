@@ -43,6 +43,11 @@ export default class Footer extends Component<Props, {}> {
               <Button
                 variant='dark'
                 className='footer-button'
+                disabled={
+                  this.props.currentComponent === 'LandingPage' ||
+                  this.props.currentComponent === 'LandingPageNoFade' ?
+                  false : true
+                }
                 onClick={() => this.props.showNewItemModal()}
               >
                 <AiOutlinePlus />
