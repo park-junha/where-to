@@ -9,7 +9,7 @@ import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
 import RemovePortals from './components/RemovePortals';
-import ResetPortals from './components/ResetPortals';
+import ResetModal from './components/ResetModal';
 import NewItemModal from './components/NewItemModal';
 import {
   AppContents
@@ -180,7 +180,7 @@ class App extends Component<{}, State> {
           hideModal={this.hideNewItemModal}
           createNewWebPortal={this.createNewWebPortal}
         />
-        <ResetPortals
+        <ResetModal
           showModal={this.state.showResetModal}
           hideModal={this.hideResetModal}
           resetPortals={this.resetPortals}
