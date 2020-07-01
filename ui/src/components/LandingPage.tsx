@@ -3,20 +3,59 @@ import React, {
 } from 'react';
 import {
   Container
-, Button
-, Row
-, Col
+  , Button
+  , Row
+  , Col
 } from 'react-bootstrap';
 
-export default class LandingPage extends Component {
+import WebPortal from './WebPortal';
+import {
+  LandingPageItems
+  , LandingPageItem
+} from '../interfaces';
+
+interface Props {
+  nofade?: boolean;
+  contents: LandingPageItems;
+}
+
+export default class LandingPage extends Component<Props> {
+  renderItem = (item: LandingPageItem): JSX.Element => {
+    switch (item.type) {
+    case 'webportal':
+      return (
+        <WebPortal
+          item={item}
+        />
+      );
+    default:
+      return (
+        <Button
+          className='landing-button-big'
+          size='lg'
+          variant='dark'
+          disabled
+        >
+          <span>N/A</span>
+        </Button>
+      )
+    }
+  };
+
   render (): JSX.Element {
     return (
-      <div className='fadein page-padding'>
+      <div className={this.props.nofade ?
+        'page-padding' :
+        'fadein page-padding'}>
         <Container>
           <Row>
             <Col />
             <Col xs={12}>
-              <h1>Where To?</h1>
+              <h1 className={this.props.nofade
+                ? 'fadein'
+                : ''}>
+                Where To?
+              </h1>
               <br />
             </Col>
             <Col />
@@ -24,24 +63,9 @@ export default class LandingPage extends Component {
           <Row>
             <Col />
             <Col xs={12}>
-              <div>
-                <div>
-                  <Button
-                    className='landing-button-big'
-                    size='lg'
-                    variant='secondary'
-                  >
-                    Leetcode
-                  </Button>
-                  <Button
-                    className='landing-button-big'
-                    size='lg'
-                    variant='secondary'
-                  >
-                    Netflix
-                  </Button>
-                </div>
-              </div>
+              {this.props.contents.map(
+                (item) => this.renderItem(item)
+              )}
             </Col>
             <Col />
           </Row>
