@@ -15,6 +15,7 @@ import {
 } from '../interfaces';
 
 interface Props {
+  nofade?: boolean;
   contents: LandingPageItems;
 }
 
@@ -43,12 +44,18 @@ export default class LandingPage extends Component<Props> {
 
   render (): JSX.Element {
     return (
-      <div className='fadein page-padding'>
+      <div className={this.props.nofade ?
+        'page-padding' :
+        'fadein page-padding'}>
         <Container>
           <Row>
             <Col />
             <Col xs={12}>
-              <h1>Where To?</h1>
+              <h1 className={this.props.nofade
+                ? 'fadein'
+                : ''}>
+                Where To?
+              </h1>
               <br />
             </Col>
             <Col />

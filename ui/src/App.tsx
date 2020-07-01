@@ -6,6 +6,8 @@ import React, {
 
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
+import LandingPage from './components/LandingPage';
+import RemovePortals from './components/RemovePortals';
 import NewItemModal from './components/NewItemModal';
 import {
   AppContents
@@ -22,7 +24,6 @@ interface State {
   showNewItemModal: boolean;
 }
 
-const LandingPage = lazy(() => import('./components/LandingPage'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
 const loadContents = (): AppContents => {
@@ -38,11 +39,11 @@ const loadContents = (): AppContents => {
     'main': main
     , 'footer': []
   }
-}
+};
 
 const setDefaultContents = (): LandingPageItems => {
   return DEFAULT_PORTALS ?? [];
-}
+};
 
 class App extends Component<{}, State> {
   state: State = {
@@ -53,10 +54,24 @@ class App extends Component<{}, State> {
 
   renderComponent = (): JSX.Element => {
     switch(this.state.component) {
+    case 'LandingPageNoFade':
+      return (
+        <LandingPage
+          nofade={true}
+          contents={this.state.contents.main}
+        />
+      );
     case 'LandingPage':
       return (
         <LandingPage
           contents={this.state.contents.main}
+        />
+      );
+    case 'RemovePortals':
+      return (
+        <RemovePortals
+          contents={this.state.contents.main}
+          removeWebPortal={this.removeWebPortal}
         />
       );
     default:
@@ -75,6 +90,12 @@ class App extends Component<{}, State> {
   hideModal = (): void => {
     this.setState({
       showNewItemModal: false
+    });
+  };
+
+  switchComponent = (newComponent: string): void => {
+    this.setState({
+      component: newComponent
     });
   };
 
@@ -99,6 +120,20 @@ class App extends Component<{}, State> {
     }), this.saveCurrentState);
   };
 
+  removeWebPortal = (idToRemove: string): void => {
+    this.setState(prevState => ({
+      ...prevState
+      , contents: {
+        ...prevState.contents
+        , main: [
+          ...prevState.contents.main.filter(
+            item => item.id !== idToRemove
+          )
+        ]
+      }
+    }), this.saveCurrentState);
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -112,7 +147,9 @@ class App extends Component<{}, State> {
           </Suspense>
         </div>
         <Footer
+          currentComponent={this.state.component}
           showNewItemModal={this.showNewItemModal}
+          switchComponent={this.switchComponent}
         />
         <NewItemModal
           showModal={this.state.showNewItemModal}

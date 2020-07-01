@@ -42,6 +42,43 @@ code {
   max-height: 120px;
 }
 
+#portals-to-remove .shake-portal:nth-child(2n) {
+  animation-name: shake-a;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 10%;
+}
+
+#portals-to-remove .shake-portal:nth-child(2n-1) {
+  animation-name: shake-b;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: 30% 5%;
+}
+
+@keyframes shake-a {
+  0% {
+    transform: rotate(-1deg);
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    transform: rotate(1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes shake-b {
+  0% {
+    transform: rotate(1deg);
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
+
 /* Extra padding for text pages */
 .page-padding {
   padding-top: 30px;
@@ -82,6 +119,10 @@ code {
     opacity: 1;
     transform: translate(0, 0);
   }
+}
+
+.horiz-spaced-buttons {
+  margin: 0px 2px;
 }
 
 /* Footer */
