@@ -3,6 +3,7 @@ import React, {
   , Suspense
   , lazy
 } from 'react';
+import { uuid } from 'uuidv4';
 
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
@@ -13,10 +14,8 @@ import {
   AppContents
   , LandingPageItems
   , NewPortalForm
-} from './interfaces';
-import {
-  DEFAULT_PORTALS
-} from './locales';
+  , DEFAULT_PORTALS
+} from './api';
 
 interface State {
   component: string;
@@ -113,7 +112,7 @@ class App extends Component<{}, State> {
           ...prevState.contents.main
           , {
             ...portal
-            , id: 'a'
+            , id: uuid()
           }
         ]
       }

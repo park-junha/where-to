@@ -4,7 +4,7 @@ import React, {
 import {
   Button
 } from 'react-bootstrap';
-import { LandingPageItem } from '../interfaces';
+import { LandingPageItem } from '../api';
 
 interface Props {
   item: LandingPageItem;

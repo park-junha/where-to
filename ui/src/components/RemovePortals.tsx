@@ -12,7 +12,7 @@ import {
 import {
   LandingPageItems
   , LandingPageItem
-} from '../interfaces';
+} from '../api';
 
 interface Props {
   contents: LandingPageItems;
