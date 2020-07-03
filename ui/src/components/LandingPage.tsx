@@ -12,7 +12,7 @@ import WebPortal from './WebPortal';
 import {
   LandingPageItems
   , LandingPageItem
-} from '../api';
+} from '../shared';
 
 interface Props {
   nofade?: boolean;

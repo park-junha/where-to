@@ -8,11 +8,17 @@ import {
   , Col
   , Modal
 } from 'react-bootstrap';
+import {
+  DragDropContext
+  , Droppable
+  , Draggable
+} from 'react-beautiful-dnd';
 
 import {
   LandingPageItems
-  , LandingPageItem
-} from '../api';
+} from '../shared';
+import DraggablePortals from './DraggablePortals';
+import DraggablePortal from './DraggablePortal';
 
 interface Props {
   contents: LandingPageItems;
@@ -23,7 +29,7 @@ interface State {
   idToRemove: null | string;
 }
 
-export default class RemovePortal extends Component<Props, State> {
+export default class EditPortals extends Component<Props, State> {
   state: State = {
     idToRemove: null
   };
@@ -45,45 +51,6 @@ export default class RemovePortal extends Component<Props, State> {
     });
   };
 
-  renderItem = (item: LandingPageItem): JSX.Element => {
-    const delay = '-' + Math.random().toFixed(2).substring(1) + 's';
-    const duration = (Math.random() / 5 + 0.2).toFixed(2).substring(1)
-      + 's';
-
-    switch (item.type) {
-    case 'webportal':
-      return (
-        <Button
-          className='landing-button-big shake-portal'
-          style={{
-            animationDelay: delay
-            , animationDuration: duration
-          }}
-          size='lg'
-          variant='secondary'
-          onClick={() => this.confirmRemove(item.id)}
-        >
-          <span>{item.title}</span>
-        </Button>
-      );
-    default:
-      return (
-        <Button
-          className='landing-button-big shake-portal'
-          style={{
-            animationDelay: delay
-            , animationDuration: duration
-          }}
-          size='lg'
-          variant='dark'
-          onClick={() => this.props.removeWebPortal(item.id)}
-        >
-          <span>N/A</span>
-        </Button>
-      )
-    }
-  };
-
   render (): JSX.Element {
     return (
       <div className='page-padding'>
@@ -102,9 +69,36 @@ export default class RemovePortal extends Component<Props, State> {
               xs={12}
               id='portals-to-remove' 
             >
-              {this.props.contents.map(
-                (item) => this.renderItem(item)
-              )}
+              <DragDropContext
+                onDragEnd={() => console.log(this.props.contents)}
+              >
+                <Droppable droppableId='yeet'>
+                  {provided => (
+                    <DraggablePortals
+                      provided={provided}
+                      innerRef={provided.innerRef}
+                    >
+                      {this.props.contents.map((item, index) =>
+                        <Draggable
+                          draggableId={item.id}
+                          index={index}
+                        >
+                          {provided => (
+                            <DraggablePortal
+                              item={item}
+                              provided={provided}
+                              innerRef={provided.innerRef}
+                              removeWebPortal={this.props.removeWebPortal}
+                              confirmRemove={this.confirmRemove}
+                            />
+                          )}
+                        </Draggable>
+                      )}
+                      {provided.placeholder}
+                    </DraggablePortals>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </Col>
             <Col />
           </Row>

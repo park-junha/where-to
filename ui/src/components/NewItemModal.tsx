@@ -12,7 +12,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import {
   NewPortalForm
   , PORTALS
-} from '../api';
+} from '../shared';
 
 interface Props {
   showModal: boolean;

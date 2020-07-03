@@ -8,7 +8,7 @@ import { uuid } from 'uuidv4';
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
-import RemovePortals from './components/RemovePortals';
+import EditPortals from './components/EditPortals';
 import ResetModal from './components/ResetModal';
 import NewItemModal from './components/NewItemModal';
 import {
@@ -16,7 +16,7 @@ import {
   , LandingPageItems
   , NewPortalForm
   , DEFAULT_PORTALS
-} from './api';
+} from './shared';
 
 interface State {
   component: string;
@@ -69,9 +69,9 @@ class App extends Component<{}, State> {
           contents={this.state.contents.main}
         />
       );
-    case 'RemovePortals':
+    case 'EditPortals':
       return (
-        <RemovePortals
+        <EditPortals
           contents={this.state.contents.main}
           removeWebPortal={this.removeWebPortal}
         />
