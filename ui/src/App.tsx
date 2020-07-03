@@ -3,25 +3,26 @@ import React, {
   , Suspense
   , lazy
 } from 'react';
+import { uuid } from 'uuidv4';
 
 import LoadingScreen from './LoadingScreen';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
-import RemovePortals from './components/RemovePortals';
+import EditPortals from './components/EditPortals';
+import ResetModal from './components/ResetModal';
 import NewItemModal from './components/NewItemModal';
 import {
   AppContents
   , LandingPageItems
   , NewPortalForm
-} from './interfaces';
-import {
-  DEFAULT_PORTALS
-} from './locales';
+  , DEFAULT_PORTALS
+} from './shared';
 
 interface State {
   component: string;
   contents: AppContents;
   showNewItemModal: boolean;
+  showResetModal: boolean;
 }
 
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -50,6 +51,7 @@ class App extends Component<{}, State> {
     component: 'LandingPage'
     , contents: loadContents()
     , showNewItemModal: false
+    , showResetModal: false
   };
 
   renderComponent = (): JSX.Element => {
@@ -67,9 +69,9 @@ class App extends Component<{}, State> {
           contents={this.state.contents.main}
         />
       );
-    case 'RemovePortals':
+    case 'EditPortals':
       return (
-        <RemovePortals
+        <EditPortals
           contents={this.state.contents.main}
           removeWebPortal={this.removeWebPortal}
         />
@@ -87,9 +89,21 @@ class App extends Component<{}, State> {
     });
   }
 
-  hideModal = (): void => {
+  hideNewItemModal = (): void => {
     this.setState({
       showNewItemModal: false
+    });
+  };
+
+  showResetModal = (): void => {
+    this.setState({
+      showResetModal: true
+    });
+  }
+
+  hideResetModal = (): void => {
+    this.setState({
+      showResetModal: false
     });
   };
 
@@ -113,7 +127,7 @@ class App extends Component<{}, State> {
           ...prevState.contents.main
           , {
             ...portal
-            , id: 'a'
+            , id: uuid()
           }
         ]
       }
@@ -134,6 +148,15 @@ class App extends Component<{}, State> {
     }), this.saveCurrentState);
   };
 
+  resetPortals = (): void => {
+    localStorage.removeItem('contentsMain');
+    this.setState({
+      contents: loadContents()
+      , component: 'LandingPageNoFade'
+    });
+    this.hideResetModal();
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -149,12 +172,18 @@ class App extends Component<{}, State> {
         <Footer
           currentComponent={this.state.component}
           showNewItemModal={this.showNewItemModal}
+          showResetModal={this.showResetModal}
           switchComponent={this.switchComponent}
         />
         <NewItemModal
           showModal={this.state.showNewItemModal}
-          hideModal={this.hideModal}
+          hideModal={this.hideNewItemModal}
           createNewWebPortal={this.createNewWebPortal}
+        />
+        <ResetModal
+          showModal={this.state.showResetModal}
+          hideModal={this.hideResetModal}
+          resetPortals={this.resetPortals}
         />
       </div>
     );

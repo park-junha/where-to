@@ -9,18 +9,20 @@ import {
   IoLogoGithub
 } from 'react-icons/io';
 import {
-  AiOutlinePlus
-} from 'react-icons/ai';
+  FiEdit
+, FiPlus
+} from 'react-icons/fi';
 import {
-  BsTrash
-} from 'react-icons/bs';
+  FcCancel
+} from 'react-icons/fc';
 import {
-  RiArrowGoBackLine
-} from 'react-icons/ri';
+  GrPowerReset
+} from 'react-icons/gr';
 
 interface Props {
   currentComponent: string;
   showNewItemModal: () => void;
+  showResetModal: () => void;
   switchComponent: (newComponent: string) => void;
 }
 
@@ -39,31 +41,49 @@ export default class Footer extends Component<Props, {}> {
               <Button
                 variant='dark'
                 className='footer-button'
+                disabled={
+                  this.props.currentComponent === 'LandingPage' ||
+                  this.props.currentComponent === 'LandingPageNoFade' ?
+                  false : true
+                }
                 onClick={() => this.props.showNewItemModal()}
               >
-                <AiOutlinePlus />
+                <FiPlus />
               </Button>
             </Nav.Item>
             <Nav.Item>
-              {this.props.currentComponent === 'RemovePortals' ? (
+              {this.props.currentComponent === 'EditPortals' ? (
                 <Button
                   variant='secondary'
                   className='footer-button'
                   onClick={() =>
                     this.props.switchComponent('LandingPageNoFade')}
                 >
-                  <RiArrowGoBackLine />
+                  <FcCancel />
                 </Button>
               ) : (
                 <Button
                   variant='dark'
                   className='footer-button'
                   onClick={() =>
-                    this.props.switchComponent('RemovePortals')}
+                    this.props.switchComponent('EditPortals')}
                 >
-                  <BsTrash />
+                  <FiEdit />
                 </Button>
               )}
+            </Nav.Item>
+            <Nav.Item>
+              <Button
+                variant='dark'
+                className='footer-button'
+                onClick={() => this.props.showResetModal()}
+              >
+                <GrPowerReset
+                  style={{
+                    filter: 'invert(100%)'
+                  }}
+                />
+              </Button>
             </Nav.Item>
           </Nav>
           <Navbar.Collapse className='justify-content-end'>
