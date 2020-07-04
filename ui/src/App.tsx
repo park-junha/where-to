@@ -73,6 +73,7 @@ class App extends Component<{}, State> {
       return (
         <EditPortals
           contents={this.state.contents.main}
+          editPortals={this.editPortals}
           removeWebPortal={this.removeWebPortal}
         />
       );
@@ -130,6 +131,16 @@ class App extends Component<{}, State> {
             , id: uuid()
           }
         ]
+      }
+    }), this.saveCurrentState);
+  };
+
+  editPortals = (newPortals: LandingPageItems): void => {
+    this.setState(prevState => ({
+      ...prevState
+      , contents: {
+        ...prevState.contents
+        , main: newPortals
       }
     }), this.saveCurrentState);
   };

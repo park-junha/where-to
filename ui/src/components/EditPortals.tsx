@@ -19,6 +19,7 @@ import SortablePortal from './SortablePortal';
 
 interface Props {
   contents: LandingPageItems;
+  editPortals: (newPortals: LandingPageItems) => void;
   removeWebPortal: (id: string) => void;
 }
 
@@ -68,7 +69,7 @@ export default class EditPortals extends Component<Props, State> {
             >
               <ReactSortable
                 list={this.props.contents}
-                setList={newState => console.log(newState)}
+                setList={newState => this.props.editPortals(newState)}
               >
                 {this.props.contents.map(item => (
                   <SortablePortal
