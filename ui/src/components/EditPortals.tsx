@@ -14,22 +14,39 @@ import {
 
 import {
   LandingPageItems
+  , NewPortalForm
 } from '../shared';
 import SortablePortal from './SortablePortal';
+import ItemModal from './ItemModal';
 
 interface Props {
   contents: LandingPageItems;
   editPortals: (newPortals: LandingPageItems) => void;
   removeWebPortal: (id: string) => void;
+  createWebPortal: (portal: NewPortalForm) => void;
 }
 
 interface State {
   idToRemove: null | string;
+  idToEdit: null | string;
 }
 
 export default class EditPortals extends Component<Props, State> {
   state: State = {
     idToRemove: null
+    , idToEdit: null
+  };
+
+  hideItemModal = (): void => {
+    this.setState({
+      idToEdit: null
+    });
+  };
+
+  openEditModal = (id: string): void => {
+    this.setState({
+      idToEdit: id
+    });
   };
 
   hideModal = (): void => {
@@ -47,6 +64,12 @@ export default class EditPortals extends Component<Props, State> {
     this.setState({
       idToRemove: id
     });
+  };
+
+  editPortal = (portal: NewPortalForm): void => {
+    this.props.removeWebPortal(this.state.idToEdit ?? '');
+    this.props.createWebPortal(portal);
+    this.hideItemModal();
   };
 
   render (): JSX.Element {
@@ -76,6 +99,7 @@ export default class EditPortals extends Component<Props, State> {
                     item={item}
                     removeWebPortal={this.props.removeWebPortal}
                     confirmRemove={this.confirmRemove}
+                    openEditModal={this.openEditModal}
                   />
                 ))}
               </ReactSortable>
@@ -83,6 +107,12 @@ export default class EditPortals extends Component<Props, State> {
             <Col />
           </Row>
         </Container>
+        <ItemModal
+          showModal={this.state.idToEdit !== null}
+          hideModal={this.hideItemModal}
+          submitForm={this.editPortal}
+          mode='edit'
+        />
         <Modal
           show={this.state.idToRemove !== null}
           onHide={this.hideModal}

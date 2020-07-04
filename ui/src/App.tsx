@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
 import EditPortals from './components/EditPortals';
 import ResetModal from './components/ResetModal';
-import NewItemModal from './components/NewItemModal';
+import ItemModal from './components/ItemModal';
 import {
   AppContents
   , LandingPageItems
@@ -21,7 +21,7 @@ import {
 interface State {
   component: string;
   contents: AppContents;
-  showNewItemModal: boolean;
+  showItemModal: boolean;
   showResetModal: boolean;
 }
 
@@ -50,7 +50,7 @@ class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage'
     , contents: loadContents()
-    , showNewItemModal: false
+    , showItemModal: false
     , showResetModal: false
   };
 
@@ -74,6 +74,7 @@ class App extends Component<{}, State> {
         <EditPortals
           contents={this.state.contents.main}
           editPortals={this.editPortals}
+          createWebPortal={this.createWebPortal}
           removeWebPortal={this.removeWebPortal}
         />
       );
@@ -84,15 +85,15 @@ class App extends Component<{}, State> {
     }
   };
 
-  showNewItemModal = (): void => {
+  showItemModal = (): void => {
     this.setState({
-      showNewItemModal: true
+      showItemModal: true
     });
   }
 
-  hideNewItemModal = (): void => {
+  hideItemModal = (): void => {
     this.setState({
-      showNewItemModal: false
+      showItemModal: false
     });
   };
 
@@ -119,7 +120,7 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
-  createNewWebPortal = (portal: NewPortalForm): void => {
+  createWebPortal = (portal: NewPortalForm): void => {
     this.setState(prevState => ({
       ...prevState
       , contents: {
@@ -182,14 +183,15 @@ class App extends Component<{}, State> {
         </div>
         <Footer
           currentComponent={this.state.component}
-          showNewItemModal={this.showNewItemModal}
+          showItemModal={this.showItemModal}
           showResetModal={this.showResetModal}
           switchComponent={this.switchComponent}
         />
-        <NewItemModal
-          showModal={this.state.showNewItemModal}
-          hideModal={this.hideNewItemModal}
-          createNewWebPortal={this.createNewWebPortal}
+        <ItemModal
+          showModal={this.state.showItemModal}
+          hideModal={this.hideItemModal}
+          submitForm={this.createWebPortal}
+          mode='create'
         />
         <ResetModal
           showModal={this.state.showResetModal}

@@ -15,6 +15,7 @@ interface Props {
   item: LandingPageItem;
   removeWebPortal: (id: string) => void;
   confirmRemove: (id: string) => void;
+  openEditModal: (id: string) => void;
 }
 
 export default class SortablePortal extends Component<Props> {
@@ -30,6 +31,7 @@ export default class SortablePortal extends Component<Props> {
           <Button
             className='horiz-spaced-buttons'
             variant='primary'
+            onClick={() => this.props.openEditModal(this.props.item.id)}
           >
             Edit
           </Button>

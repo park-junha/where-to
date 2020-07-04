@@ -21,7 +21,7 @@ import {
 
 interface Props {
   currentComponent: string;
-  showNewItemModal: () => void;
+  showItemModal: () => void;
   showResetModal: () => void;
   switchComponent: (newComponent: string) => void;
 }
@@ -46,7 +46,7 @@ export default class Footer extends Component<Props, {}> {
                   this.props.currentComponent === 'LandingPageNoFade' ?
                   false : true
                 }
-                onClick={() => this.props.showNewItemModal()}
+                onClick={() => this.props.showItemModal()}
               >
                 <FiPlus />
               </Button>
