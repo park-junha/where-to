@@ -56,7 +56,7 @@ export default class EditPortals extends Component<Props, State> {
           <Row>
             <Col />
             <Col xs={12}>
-              <h1 className='fadein'>Select a Portal to Remove</h1>
+              <h1 className='fadein'>Reorder or Remove Portals</h1>
               <br />
             </Col>
             <Col />
