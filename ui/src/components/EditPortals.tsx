@@ -9,19 +9,17 @@ import {
   , Modal
 } from 'react-bootstrap';
 import {
-  DragDropContext
-  , Droppable
-  , Draggable
-} from 'react-beautiful-dnd';
+  ReactSortable
+} from 'react-sortablejs';
 
 import {
   LandingPageItems
 } from '../shared';
-import DraggablePortals from './DraggablePortals';
-import DraggablePortal from './DraggablePortal';
+import SortablePortal from './SortablePortal';
 
 interface Props {
   contents: LandingPageItems;
+  editPortals: (newPortals: LandingPageItems) => void;
   removeWebPortal: (id: string) => void;
 }
 
@@ -69,36 +67,18 @@ export default class EditPortals extends Component<Props, State> {
               xs={12}
               id='portals-to-remove' 
             >
-              <DragDropContext
-                onDragEnd={() => console.log(this.props.contents)}
+              <ReactSortable
+                list={this.props.contents}
+                setList={newState => this.props.editPortals(newState)}
               >
-                <Droppable droppableId='yeet'>
-                  {provided => (
-                    <DraggablePortals
-                      provided={provided}
-                      innerRef={provided.innerRef}
-                    >
-                      {this.props.contents.map((item, index) =>
-                        <Draggable
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {provided => (
-                            <DraggablePortal
-                              item={item}
-                              provided={provided}
-                              innerRef={provided.innerRef}
-                              removeWebPortal={this.props.removeWebPortal}
-                              confirmRemove={this.confirmRemove}
-                            />
-                          )}
-                        </Draggable>
-                      )}
-                      {provided.placeholder}
-                    </DraggablePortals>
-                  )}
-                </Droppable>
-              </DragDropContext>
+                {this.props.contents.map(item => (
+                  <SortablePortal
+                    item={item}
+                    removeWebPortal={this.props.removeWebPortal}
+                    confirmRemove={this.confirmRemove}
+                  />
+                ))}
+              </ReactSortable>
             </Col>
             <Col />
           </Row>
