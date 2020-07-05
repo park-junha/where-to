@@ -23,7 +23,7 @@ interface Props {
   contents: LandingPageItems;
   editPortals: (newPortals: LandingPageItems) => void;
   editPortal: (idToEdit: string, portal: NewPortalForm) => void;
-  removeWebPortal: (id: string) => void;
+  removePortal: (id: string) => void;
 }
 
 interface State {
@@ -56,7 +56,7 @@ export default class EditPortals extends Component<Props, State> {
   };
 
   removePortal = (): void => {
-    this.props.removeWebPortal(this.state.idToRemove ?? '');
+    this.props.removePortal(this.state.idToRemove ?? '');
     this.hideModal();
   };
 
@@ -96,7 +96,7 @@ export default class EditPortals extends Component<Props, State> {
                 {this.props.contents.map(item => (
                   <SortablePortal
                     item={item}
-                    removeWebPortal={this.props.removeWebPortal}
+                    removePortal={this.props.removePortal}
                     confirmRemove={this.confirmRemove}
                     openEditModal={this.openEditModal}
                   />

@@ -13,7 +13,7 @@ import {
 
 interface Props {
   item: LandingPageItem;
-  removeWebPortal: (id: string) => void;
+  removePortal: (id: string) => void;
   confirmRemove: (id: string) => void;
   openEditModal: (id: string) => void;
 }
@@ -93,7 +93,7 @@ export default class SortablePortal extends Component<Props> {
             }}
             size='lg'
             variant='dark'
-            onClick={() => this.props.removeWebPortal(this.props.item.id)}
+            onClick={() => this.props.removePortal(this.props.item.id)}
           >
             <span>N/A</span>
           </Button>

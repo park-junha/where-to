@@ -75,7 +75,7 @@ class App extends Component<{}, State> {
           contents={this.state.contents.main}
           editPortals={this.editPortals}
           editPortal={this.editPortal}
-          removeWebPortal={this.removeWebPortal}
+          removePortal={this.removePortal}
         />
       );
     default:
@@ -120,7 +120,7 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
-  createWebPortal = (portal: NewPortalForm): void => {
+  createPortal = (portal: NewPortalForm): void => {
     this.setState(prevState => ({
       ...prevState
       , contents: {
@@ -169,7 +169,7 @@ class App extends Component<{}, State> {
     }), this.saveCurrentState);
   };
 
-  removeWebPortal = (idToRemove: string): void => {
+  removePortal = (idToRemove: string): void => {
     this.setState(prevState => ({
       ...prevState
       , contents: {
@@ -213,7 +213,7 @@ class App extends Component<{}, State> {
         <ItemModal
           showModal={this.state.showItemModal}
           hideModal={this.hideItemModal}
-          submitForm={this.createWebPortal}
+          submitForm={this.createPortal}
           mode='create'
         />
         <ResetModal
