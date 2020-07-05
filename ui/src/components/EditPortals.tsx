@@ -111,6 +111,10 @@ export default class EditPortals extends Component<Props, State> {
           hideModal={this.hideItemModal}
           submitForm={this.editPortal}
           mode='edit'
+          initialFormValues={
+            this.props.contents[this.props.contents.findIndex(i =>
+              i.id === this.state.idToEdit)]
+          }
         />
         <Modal
           show={this.state.idToRemove !== null}

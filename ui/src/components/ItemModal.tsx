@@ -19,6 +19,7 @@ interface Props {
   hideModal: () => void;
   submitForm: (portal: NewPortalForm) => void;
   mode: string;
+  initialFormValues?: NewPortalForm;
 }
 
 interface State {
@@ -34,6 +35,7 @@ interface WebPortalOptionsProps {
   submitForm: (portal: NewPortalForm) => void;
   submitLabel: string;
   hideModal: () => void;
+  initialFormValues?: NewPortalForm;
 }
 
 export default class ItemModal extends Component<Props, State> {
@@ -49,6 +51,7 @@ export default class ItemModal extends Component<Props, State> {
           submitForm={this.props.submitForm}
           hideModal={this.props.hideModal}
           submitLabel={this.submitLabel()}
+          initialFormValues={this.props.initialFormValues ?? undefined}
         />
       );
     default:
@@ -140,6 +143,17 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
   state: WebPortalOptionsState = {
     title: ''
     , url: ''
+  };
+
+  componentDidMount(): void {
+    if (this.props.initialFormValues &&
+        this.props.initialFormValues.type === 'webportal') {
+      this.setState((prevState, prevProps) => ({
+        //  TODO: find a better way to handle potential undefined props?
+        title: prevProps?.initialFormValues?.title ?? ''
+        , url: prevProps?.initialFormValues?.url ?? ''
+      }));
+    }
   };
 
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
