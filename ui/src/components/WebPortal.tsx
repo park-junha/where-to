@@ -8,6 +8,7 @@ import { LandingPageItem } from '../shared';
 
 interface Props {
   item: LandingPageItem;
+  switchComponent: (newComponent: string) => void;
 }
 
 export default class WebPortal extends Component<Props> {
@@ -20,6 +21,7 @@ export default class WebPortal extends Component<Props> {
           className='landing-button-big'
           size='lg'
           variant='secondary'
+          onClick={() => this.props.switchComponent('LoadWebsite')}
         >
           <span>{this.props.item.title}</span>
         </Button>

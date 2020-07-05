@@ -6,6 +6,7 @@ import React, {
 import { uuid } from 'uuidv4';
 
 import LoadingScreen from './LoadingScreen';
+import LoadingPage from './components/LoadingPage';
 import Footer from './components/Footer';
 import LandingPage from './components/LandingPage';
 import EditPortals from './components/EditPortals';
@@ -61,12 +62,14 @@ class App extends Component<{}, State> {
         <LandingPage
           nofade={true}
           contents={this.state.contents.main}
+          switchComponent={this.switchComponent}
         />
       );
     case 'LandingPage':
       return (
         <LandingPage
           contents={this.state.contents.main}
+          switchComponent={this.switchComponent}
         />
       );
     case 'EditPortals':
@@ -77,6 +80,10 @@ class App extends Component<{}, State> {
           editPortal={this.editPortal}
           removePortal={this.removePortal}
         />
+      );
+    case 'LoadWebsite':
+      return (
+        <LoadingPage />
       );
     default:
       return (
