@@ -17,35 +17,38 @@ import {
 interface Props {
   showModal: boolean;
   hideModal: () => void;
-  createNewWebPortal: (portal: NewPortalForm) => void;
+  submitForm: (portal: NewPortalForm) => void;
+  mode: string;
 }
 
 interface State {
   portalType: string;
 }
 
-interface NewWebPortalOptionsState {
+interface WebPortalOptionsState {
   title: string;
   url: string;
 }
 
-interface NewWebPortalOptionsProps {
-  createNewWebPortal: (portal: NewPortalForm) => void;
+interface WebPortalOptionsProps {
+  submitForm: (portal: NewPortalForm) => void;
+  submitLabel: string;
   hideModal: () => void;
 }
 
-export default class NewItemModal extends Component<Props, State> {
+export default class ItemModal extends Component<Props, State> {
   state: State = {
     portalType: PORTALS[0].name ?? 'N/A'
   };
 
   renderOptions = (): JSX.Element => {
-    switch(this.state.portalType) {
+    switch (this.state.portalType) {
     case 'webportal':
       return (
-        <NewWebPortalOptions
-          createNewWebPortal={this.props.createNewWebPortal}
+        <WebPortalOptions
+          submitForm={this.props.submitForm}
           hideModal={this.props.hideModal}
+          submitLabel={this.submitLabel()}
         />
       );
     default:
@@ -54,6 +57,30 @@ export default class NewItemModal extends Component<Props, State> {
           Sorry. We don&#39;t support that yet.
         </div>
       );
+    }
+  };
+
+  renderHeader = (): JSX.Element => {
+    switch (this.props.mode) {
+      case 'create':
+        return <h4>Add New Portal</h4>;
+      case 'edit':
+        return <h4>Edit Portal</h4>;
+      //  should never get to this point
+      default:
+        return <h4>Portal Modal</h4>;
+    }
+  };
+
+  submitLabel = (): string => {
+    switch (this.props.mode) {
+      case 'create':
+        return 'Create';
+      case 'edit':
+        return 'Edit';
+      //  should never get to this point
+      default:
+        return 'Submit';
     }
   };
 
@@ -67,7 +94,7 @@ export default class NewItemModal extends Component<Props, State> {
           className='new-item-modal'
           closeButton
         >
-          <h4>Add New Portal</h4>
+          {this.renderHeader()}
         </Modal.Header>
         <Modal.Body
           className='new-item-modal'
@@ -103,14 +130,14 @@ export default class NewItemModal extends Component<Props, State> {
   };
 }
 
-class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
-  , NewWebPortalOptionsState> {
-  constructor(props: NewWebPortalOptionsProps) {
+class WebPortalOptions extends Component<WebPortalOptionsProps
+  , WebPortalOptionsState> {
+  constructor(props: WebPortalOptionsProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   };
 
-  state: NewWebPortalOptionsState = {
+  state: WebPortalOptionsState = {
     title: ''
     , url: ''
   };
@@ -132,8 +159,8 @@ class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
       */
   };
 
-  createWebPortal = (): void => {
-    this.props.createNewWebPortal({
+  submitForm = (): void => {
+    this.props.submitForm({
       title: this.state.title
       , type: 'webportal'
       , url: this.state.url
@@ -167,9 +194,9 @@ class NewWebPortalOptions extends Component<NewWebPortalOptionsProps
           <Button
             variant='primary'
             className='horiz-spaced-buttons'
-            onClick={this.createWebPortal}
+            onClick={this.submitForm}
           >
-            Create
+            {this.props.submitLabel}
           </Button>
           <Button
             variant='dark'

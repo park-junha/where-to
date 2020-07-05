@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -11,7 +11,6 @@
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
-    "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
@@ -52,11 +51,11 @@
     "postcss-safe-parser": "4.0.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
-    "react-beautiful-dnd": "^13.0.0",
     "react-bootstrap": "^1.0.1",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
+    "react-sortablejs": "^2.0.11",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",

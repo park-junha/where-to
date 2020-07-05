@@ -9,29 +9,44 @@ import {
   , Modal
 } from 'react-bootstrap';
 import {
-  DragDropContext
-  , Droppable
-  , Draggable
-} from 'react-beautiful-dnd';
+  ReactSortable
+} from 'react-sortablejs';
 
 import {
   LandingPageItems
+  , NewPortalForm
 } from '../shared';
-import DraggablePortals from './DraggablePortals';
-import DraggablePortal from './DraggablePortal';
+import SortablePortal from './SortablePortal';
+import ItemModal from './ItemModal';
 
 interface Props {
   contents: LandingPageItems;
-  removeWebPortal: (id: string) => void;
+  editPortals: (newPortals: LandingPageItems) => void;
+  editPortal: (idToEdit: string, portal: NewPortalForm) => void;
+  removePortal: (id: string) => void;
 }
 
 interface State {
   idToRemove: null | string;
+  idToEdit: null | string;
 }
 
 export default class EditPortals extends Component<Props, State> {
   state: State = {
     idToRemove: null
+    , idToEdit: null
+  };
+
+  hideItemModal = (): void => {
+    this.setState({
+      idToEdit: null
+    });
+  };
+
+  openEditModal = (id: string): void => {
+    this.setState({
+      idToEdit: id
+    });
   };
 
   hideModal = (): void => {
@@ -41,7 +56,7 @@ export default class EditPortals extends Component<Props, State> {
   };
 
   removePortal = (): void => {
-    this.props.removeWebPortal(this.state.idToRemove ?? '');
+    this.props.removePortal(this.state.idToRemove ?? '');
     this.hideModal();
   };
 
@@ -51,6 +66,11 @@ export default class EditPortals extends Component<Props, State> {
     });
   };
 
+  editPortal = (portal: NewPortalForm): void => {
+    this.props.editPortal(this.state.idToEdit ?? '', portal);
+    this.hideItemModal();
+  };
+
   render (): JSX.Element {
     return (
       <div className='page-padding'>
@@ -58,7 +78,7 @@ export default class EditPortals extends Component<Props, State> {
           <Row>
             <Col />
             <Col xs={12}>
-              <h1 className='fadein'>Select a Portal to Remove</h1>
+              <h1 className='fadein'>Reorder or Remove Portals</h1>
               <br />
             </Col>
             <Col />
@@ -69,40 +89,29 @@ export default class EditPortals extends Component<Props, State> {
               xs={12}
               id='portals-to-remove' 
             >
-              <DragDropContext
-                onDragEnd={() => console.log(this.props.contents)}
+              <ReactSortable
+                list={this.props.contents}
+                setList={newState => this.props.editPortals(newState)}
               >
-                <Droppable droppableId='yeet'>
-                  {provided => (
-                    <DraggablePortals
-                      provided={provided}
-                      innerRef={provided.innerRef}
-                    >
-                      {this.props.contents.map((item, index) =>
-                        <Draggable
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {provided => (
-                            <DraggablePortal
-                              item={item}
-                              provided={provided}
-                              innerRef={provided.innerRef}
-                              removeWebPortal={this.props.removeWebPortal}
-                              confirmRemove={this.confirmRemove}
-                            />
-                          )}
-                        </Draggable>
-                      )}
-                      {provided.placeholder}
-                    </DraggablePortals>
-                  )}
-                </Droppable>
-              </DragDropContext>
+                {this.props.contents.map(item => (
+                  <SortablePortal
+                    item={item}
+                    removePortal={this.props.removePortal}
+                    confirmRemove={this.confirmRemove}
+                    openEditModal={this.openEditModal}
+                  />
+                ))}
+              </ReactSortable>
             </Col>
             <Col />
           </Row>
         </Container>
+        <ItemModal
+          showModal={this.state.idToEdit !== null}
+          hideModal={this.hideItemModal}
+          submitForm={this.editPortal}
+          mode='edit'
+        />
         <Modal
           show={this.state.idToRemove !== null}
           onHide={this.hideModal}
