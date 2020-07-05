@@ -74,7 +74,7 @@ class App extends Component<{}, State> {
         <EditPortals
           contents={this.state.contents.main}
           editPortals={this.editPortals}
-          createWebPortal={this.createWebPortal}
+          editPortal={this.editPortal}
           removeWebPortal={this.removeWebPortal}
         />
       );
@@ -142,6 +142,29 @@ class App extends Component<{}, State> {
       , contents: {
         ...prevState.contents
         , main: newPortals
+      }
+    }), this.saveCurrentState);
+  };
+
+  editPortal = (idToEdit: string, portal: NewPortalForm): void => {
+    const index = this.state.contents.main.findIndex(i =>
+      i.id === idToEdit);
+    if (index === -1) {
+      console.error('Error: Could not edit portal.');
+      return;
+    };
+    this.setState(prevState => ({
+      ...prevState
+      , contents: {
+        ...prevState.contents
+        , main: [
+          ...prevState.contents.main.slice(0, index)
+          , {
+            ...portal
+            , id: uuid()
+          }
+          , ...prevState.contents.main.slice(index + 1)
+        ]
       }
     }), this.saveCurrentState);
   };

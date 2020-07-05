@@ -22,8 +22,8 @@ import ItemModal from './ItemModal';
 interface Props {
   contents: LandingPageItems;
   editPortals: (newPortals: LandingPageItems) => void;
+  editPortal: (idToEdit: string, portal: NewPortalForm) => void;
   removeWebPortal: (id: string) => void;
-  createWebPortal: (portal: NewPortalForm) => void;
 }
 
 interface State {
@@ -67,8 +67,7 @@ export default class EditPortals extends Component<Props, State> {
   };
 
   editPortal = (portal: NewPortalForm): void => {
-    this.props.removeWebPortal(this.state.idToEdit ?? '');
-    this.props.createWebPortal(portal);
+    this.props.editPortal(this.state.idToEdit ?? '', portal);
     this.hideItemModal();
   };
 
