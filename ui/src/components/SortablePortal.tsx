@@ -47,6 +47,27 @@ export default class SortablePortal extends Component<Props> {
     );
   }
 
+  //  TODO: find proper type for props
+  deleteOnlyOption = (props: any): JSX.Element => {
+    return (
+      <Popover
+        {...props}
+      >
+        <Popover.Content
+          style={{backgroundColor: 'rgba(0,0,0,0.8)'}}
+        >
+          <Button
+            className='horiz-spaced-buttons'
+            variant='danger'
+            onClick={() => this.props.removePortal(this.props.item.id)}
+          >
+            Delete
+          </Button>
+        </Popover.Content>
+      </Popover>
+    );
+  }
+
   render (): JSX.Element {
     const delay = '-' + Math.random().toFixed(2).substring(1) + 's';
     const duration = (Math.random() / 5 + 0.2).toFixed(2).substring(1)
@@ -85,18 +106,26 @@ export default class SortablePortal extends Component<Props> {
         <span
           key={this.props.item.id}
         >
-          <Button
-            className='landing-button-big shake-portal'
-            style={{
-              animationDelay: delay
-              , animationDuration: duration
+          <OverlayTrigger
+            placement='top'
+            delay={{
+              show: 250
+              , hide: 450
             }}
-            size='lg'
-            variant='dark'
-            onClick={() => this.props.removePortal(this.props.item.id)}
+            overlay={this.deleteOnlyOption}
           >
-            <span>N/A</span>
-          </Button>
+            <Button
+              className='landing-button-big shake-portal'
+              style={{
+                animationDelay: delay
+                , animationDuration: duration
+              }}
+              size='lg'
+              variant='dark'
+            >
+              <span>N/A</span>
+            </Button>
+          </OverlayTrigger>
         </span>
       );
     }
