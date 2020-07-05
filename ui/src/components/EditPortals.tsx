@@ -90,6 +90,7 @@ export default class EditPortals extends Component<Props, State> {
               id='portals-to-remove' 
             >
               <ReactSortable
+                animation={200}
                 list={this.props.contents}
                 setList={newState => this.props.editPortals(newState)}
               >
