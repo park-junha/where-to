@@ -16,7 +16,7 @@ export default class LoadingPage extends Component {
           <Row>
             <Col />
             <Col xs={12}>
-              <h1>
+              <h1 className='fadein'>
                 Loading...
               </h1>
               <br />
