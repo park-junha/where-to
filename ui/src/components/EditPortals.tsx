@@ -90,6 +90,7 @@ export default class EditPortals extends Component<Props, State> {
               id='portals-to-remove' 
             >
               <ReactSortable
+                animation={200}
                 list={this.props.contents}
                 setList={newState => this.props.editPortals(newState)}
               >
@@ -111,6 +112,10 @@ export default class EditPortals extends Component<Props, State> {
           hideModal={this.hideItemModal}
           submitForm={this.editPortal}
           mode='edit'
+          initialFormValues={
+            this.props.contents[this.props.contents.findIndex(i =>
+              i.id === this.state.idToEdit)]
+          }
         />
         <Modal
           show={this.state.idToRemove !== null}

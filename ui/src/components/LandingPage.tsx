@@ -17,6 +17,7 @@ import {
 interface Props {
   nofade?: boolean;
   contents: LandingPageItems;
+  switchComponent: (newComponent: string) => void;
 }
 
 export default class LandingPage extends Component<Props> {
@@ -26,6 +27,7 @@ export default class LandingPage extends Component<Props> {
       return (
         <WebPortal
           item={item}
+          switchComponent={this.props.switchComponent}
         />
       );
     default:
