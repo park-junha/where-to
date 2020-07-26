@@ -20,7 +20,7 @@ export default class LoadingPage extends Component {
                 Loading...
               </h1>
               <br />
-              <div className='fadein spinner centered'>
+              <div className='fadein centered'>
                 <Spinner animation='border' variant='light'>
                   <span className='sr-only'>Loading...</span>
                 </Spinner>
