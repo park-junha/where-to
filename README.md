@@ -4,7 +4,7 @@
 
 Where To is a web broswer extension that replaces your New Tab with a customizable, personalized interface.
 
-Where To is currently in alpha. You can download it from the Chrome Web Store [here](https://chrome.google.com/webstore/detail/where-to/kdhcodpjaffhbbphkahnkbllddjihima)!
+Where To is currently in alpha. You can download it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/where-to/kdhcodpjaffhbbphkahnkbllddjihima) or [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/where-to/)!
 
 ## Development Server
 
