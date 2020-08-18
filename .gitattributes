@@ -1,2 +1,2 @@
-ui/scripts/* linguist-detectable=false
-ui/config/* linguist-detectable=false
+scripts/* linguist-detectable=false
+config/* linguist-detectable=false
