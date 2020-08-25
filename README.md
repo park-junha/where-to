@@ -6,6 +6,13 @@ Where To is a web broswer extension that replaces your New Tab with a customizab
 
 Where To is currently in alpha. You can download it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/where-to/kdhcodpjaffhbbphkahnkbllddjihima) or [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/where-to/)!
 
+The following technologies are used:
+- **Framework**: React
+- **Language**: TypeScript
+- **Stylesheets**: CSS
+- **Testing**: Jest
+- **Package Manager**: Yarn
+
 ## Development Server
 
 To run a development server, run the following:
