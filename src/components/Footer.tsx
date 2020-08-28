@@ -68,6 +68,10 @@ export default class Footer extends Component<Props, {}> {
                   variant='dark'
                   className='footer-button'
                   data-testid='footer-button-edit'
+                  disabled={
+                    this.props.currentComponent === 'LoadWebsite' ?
+                    true : false
+                  }
                   onClick={() =>
                     this.props.switchComponent('EditPortals')}
                 >

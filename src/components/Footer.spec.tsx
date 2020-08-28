@@ -56,7 +56,7 @@ it('should disable add button when edit portals page is loaded', () => {
   expect(addButton).toBeDisabled();
 });
 
-it('should disable add button when app is loading a website', () => {
+it('should disable add/edit buttons when app is loading a website', () => {
   const props = {
     currentComponent: 'LoadWebsite',
     showItemModal: false,
@@ -65,9 +65,9 @@ it('should disable add button when app is loading a website', () => {
   };
   const { queryByTestId } = render(<Footer {...props}/>);
   const addButton = queryByTestId('footer-button-add');
-  //const editButton = queryByTestId('footer-button-edit');
-  //expect(editButton).toBeDisabled();
+  const editButton = queryByTestId('footer-button-edit');
   expect(addButton).toBeDisabled();
+  expect(editButton).toBeDisabled();
 });
 
 it('should not disable add button when landing page is loaded', () => {
