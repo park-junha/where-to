@@ -41,6 +41,7 @@ export default class Footer extends Component<Props, {}> {
               <Button
                 variant='dark'
                 className='footer-button'
+                data-testid='footer-button-add'
                 disabled={
                   this.props.currentComponent === 'LandingPage' ||
                   this.props.currentComponent === 'LandingPageNoFade' ?
@@ -56,6 +57,7 @@ export default class Footer extends Component<Props, {}> {
                 <Button
                   variant='secondary'
                   className='footer-button'
+                  data-testid='footer-button-cancel-edit'
                   onClick={() =>
                     this.props.switchComponent('LandingPageNoFade')}
                 >
@@ -65,6 +67,11 @@ export default class Footer extends Component<Props, {}> {
                 <Button
                   variant='dark'
                   className='footer-button'
+                  data-testid='footer-button-edit'
+                  disabled={
+                    this.props.currentComponent === 'LoadWebsite' ?
+                    true : false
+                  }
                   onClick={() =>
                     this.props.switchComponent('EditPortals')}
                 >
@@ -76,6 +83,7 @@ export default class Footer extends Component<Props, {}> {
               <Button
                 variant='dark'
                 className='footer-button'
+                data-testid='footer-button-reset'
                 onClick={() => this.props.showResetModal()}
               >
                 <GrPowerReset
@@ -96,6 +104,7 @@ export default class Footer extends Component<Props, {}> {
                 <Button
                   variant='dark'
                   className='footer-button'
+                  data-testid='footer-button-source-code'
                 >
                   <IoLogoGithub className='footer-ioicon' />
                 </Button>
