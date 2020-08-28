@@ -1,6 +1,7 @@
 ## Where To?
 ![Chrome](https://img.shields.io/website?down_message=unavailable&label=chrome&up_message=available&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fwhere-to%2Fkdhcodpjaffhbbphkahnkbllddjihima)
 ![Firefox](https://img.shields.io/website?down_message=unavailable&label=firefox&up_message=available&url=https%3A%2F%2Faddons.mozilla.org%2Fen-US%2Ffirefox%2Faddon%2Fwhere-to%2F)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/park-junha/WhereTo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/park-junha/WhereTo/context:javascript)
 
 Where To is a web broswer extension that replaces your New Tab with a customizable, personalized interface.
 
