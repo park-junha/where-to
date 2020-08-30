@@ -19,12 +19,45 @@ const testContent = [
   }
 ];
 
+const testInvalidContent = [
+  {
+    title: 'This title should not render',
+    type: 'invalidcontent',
+    url: 'nowhere',
+    id: 'notvalid'
+  }
+];
+
 it('renders header', () => {
   const props = {
     contents: testContent,
     switchComponent: App.switchComponent
   };
-  const { getByText } = render(<LandingPage {...props} />);
-  const h1 = getByText(/Where To/);
+  const { queryByText } = render(<LandingPage {...props} />);
+  const h1 = queryByText(/Where To/);
   expect(h1).toBeInTheDocument();
+});
+
+it('renders web portal buttons', () => {
+  const props = {
+    contents: testContent,
+    switchComponent: App.switchComponent
+  };
+  const { queryByText } = render(<LandingPage {...props} />);
+  const github = queryByText(/GitHub/);
+  const spekkio = queryByText(/Spekkio/);
+  expect(github).toBeInTheDocument();
+  expect(spekkio).toBeInTheDocument();
+});
+
+it('renders N/A for invalid items', () => {
+  const props = {
+    contents: testInvalidContent,
+    switchComponent: App.switchComponent
+  };
+  const { queryByText } = render(<LandingPage {...props} />);
+  const na = queryByText(/N\/A/);
+  const unexpected = queryByText(/This title should not render/);
+  expect(na).toBeInTheDocument();
+  expect(unexpected).not.toBeInTheDocument();
 });
