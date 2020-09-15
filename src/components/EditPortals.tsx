@@ -95,12 +95,14 @@ export default class EditPortals extends Component<Props, State> {
                 setList={newState => this.props.editPortals(newState)}
               >
                 {this.props.contents.map(item => (
-                  <SortablePortal
-                    item={item}
-                    removePortal={this.props.removePortal}
-                    confirmRemove={this.confirmRemove}
-                    openEditModal={this.openEditModal}
-                  />
+                  <div style={{display: 'inline-block'}}>
+                    <SortablePortal
+                      item={item}
+                      removePortal={this.props.removePortal}
+                      confirmRemove={this.confirmRemove}
+                      openEditModal={this.openEditModal}
+                    />
+                  </div>
                 ))}
               </ReactSortable>
             </Col>
