@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.5.12",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
@@ -42,6 +42,7 @@
     "jest-resolve": "26.4.0",
     "jest-watch-typeahead": "0.6.0",
     "mini-css-extract-plugin": "0.10.0",
+    "node-sass": "^4.14.1",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.2.1",
