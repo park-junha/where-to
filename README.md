@@ -12,7 +12,7 @@ Where To is currently in alpha. You can download it from the [Chrome Web Store](
 The following technologies are used:
 - **Framework**: React
 - **Language**: TypeScript
-- **Stylesheets**: CSS
+- **Stylesheets**: Sass
 - **Testing**: Jest
 - **Package Manager**: Yarn
 
