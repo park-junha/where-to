@@ -15,7 +15,7 @@ function logErrorInfo() {
 }
 
 if (process.argv.length !== 3) {
-  console.error('ERR: expected version argument!');
+  console.error('ERR: missing expected argument!');
   logErrorInfo();
   process.exit(1);
 }
@@ -35,7 +35,7 @@ case 'major':
   newVersionArr[2] = 0;
   break;
 default:
-  console.error(`ERR: Invalid option for flag --version: ${process.argv[2]}.`);
+  console.error(`ERR: Invalid argument: ${process.argv[2]}.`);
   logErrorInfo();
   process.exit(1);
 }
