@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
@@ -75,6 +75,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "bump": "node scripts/bump.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
