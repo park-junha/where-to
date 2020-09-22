@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const packageJsonPath = path.join(__dirname, '../package.json');
 const manifestJsonPath = path.join(__dirname, '../public/manifest.json');
+const sharedConstsPath = path.join(__dirname, '../src/shared.ts');
 const packageJson = require('../package.json');
 const manifestJson = require('../public/manifest.json');
 
@@ -52,4 +53,13 @@ fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), (err) => {
 fs.writeFile(manifestJsonPath, JSON.stringify(manifestJson, null, 2), (err) => {
   if (err) return console.error(err);
   console.log(`Bumped manifest.json to ${newVersion}.`);
+});
+
+fs.readFile(sharedConstsPath, 'utf8', (err, sharedData) => {
+  if (err) return console.error(err);
+  const bumpedSharedData = sharedData.replace(/\d+\.\d+\.\d+/, newVersion);
+  fs.writeFile(sharedConstsPath, bumpedSharedData, 'utf8', (err) => {
+    if (err) return console.error(err);
+  });
+  console.log(`Bumped VERSION in shared.ts to ${newVersion}.`);
 });
