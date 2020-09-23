@@ -1,5 +1,7 @@
 import { uuid } from 'uuidv4';
 
+export const VERSION = '0.6.4';
+
 export interface AppContents {
   main: LandingPageItems;
   footer: FooterLayout;

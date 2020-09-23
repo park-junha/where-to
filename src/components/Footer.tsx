@@ -6,9 +6,6 @@ import {
 //, Dropdown
 } from 'react-bootstrap';
 import {
-  IoLogoGithub
-} from 'react-icons/io';
-import {
   FiEdit
 , FiPlus
 } from 'react-icons/fi';
@@ -18,6 +15,7 @@ import {
 import {
   GrPowerReset
 } from 'react-icons/gr';
+import { VERSION } from '../shared';
 
 interface Props {
   currentComponent: string;
@@ -100,14 +98,10 @@ export default class Footer extends Component<Props, {}> {
                 href='https://github.com/park-junha/WhereTo'
                 target='_blank'
                 rel='noopener noreferrer'
+                id='footer-version'
+                data-testid='footer-button-source-code'
               >
-                <Button
-                  variant='dark'
-                  className='footer-button'
-                  data-testid='footer-button-source-code'
-                >
-                  <IoLogoGithub className='footer-ioicon' />
-                </Button>
+                {VERSION}
               </a>
             </Nav.Item>
           </Navbar.Collapse>
