@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 
-export const VERSION = '0.6.4';
+export const VERSION = '0.7.0';
 
 export interface AppContents {
   main: LandingPageItems;
