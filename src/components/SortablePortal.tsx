@@ -11,7 +11,6 @@ import {
 
 interface Props {
   item: LandingPageItem;
-  removePortal: (id: string) => void;
   confirmRemove: (id: string) => void;
   openEditModal: (id: string) => void;
 }

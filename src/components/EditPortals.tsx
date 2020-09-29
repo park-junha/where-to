@@ -3,10 +3,8 @@ import React, {
 } from 'react';
 import {
   Container
-  , Button
   , Row
   , Col
-  , Modal
 } from 'react-bootstrap';
 import {
   ReactSortable
@@ -27,14 +25,12 @@ interface Props {
 }
 
 interface State {
-  idToRemove: null | string;
   idToEdit: null | string;
 }
 
 export default class EditPortals extends Component<Props, State> {
   state: State = {
-    idToRemove: null
-    , idToEdit: null
+    idToEdit: null
   };
 
   hideItemModal = (): void => {
@@ -98,7 +94,6 @@ export default class EditPortals extends Component<Props, State> {
                   <div style={{display: 'inline-block'}}>
                     <SortablePortal
                       item={item}
-                      removePortal={this.props.removePortal}
                       confirmRemove={this.confirmRemove}
                       openEditModal={this.openEditModal}
                     />
@@ -120,37 +115,6 @@ export default class EditPortals extends Component<Props, State> {
               i.id === this.state.idToEdit)]
           }
         />
-        <Modal
-          show={this.state.idToRemove !== null}
-          onHide={this.hideModal}
-        >
-          <Modal.Header
-            className='new-item-modal'
-            closeButton
-          >
-            <h4>Confirm Portal Removal</h4>
-          </Modal.Header>
-          <Modal.Body
-            className='new-item-modal'
-          >
-            <h6>Are you sure you want to remove this portal?</h6>
-            <p>You cannot undo this action!</p>
-            <Button
-              variant='danger'
-              className='horiz-spaced-buttons'
-              onClick={this.removePortal}
-            >
-              Yes
-            </Button>
-            <Button
-              variant='dark'
-              className='horiz-spaced-buttons'
-              onClick={this.hideModal}
-            >
-              Cancel
-            </Button>
-          </Modal.Body>
-        </Modal>
       </div>
     );
   };
