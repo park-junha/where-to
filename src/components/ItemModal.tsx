@@ -13,10 +13,12 @@ import {
   NewPortalForm
   , PORTALS
 } from '../shared';
+import ConfirmRemove from './ConfirmRemove';
 
 interface Props {
   showModal: boolean;
   hideModal: () => void;
+  removePortal: () => void;
   submitForm: (portal: NewPortalForm) => void;
   mode: string;
   initialFormValues?: NewPortalForm;
@@ -54,6 +56,13 @@ export default class ItemModal extends Component<Props, State> {
           initialFormValues={this.props.initialFormValues ?? undefined}
         />
       );
+    case 'delete':
+      return (
+        <ConfirmRemove
+          hideModal={this.props.hideModal}
+          removePortal={this.props.removePortal}
+        />
+      );
     default:
       return (
         <div>
@@ -85,6 +94,29 @@ export default class ItemModal extends Component<Props, State> {
       default:
         return 'Submit';
     }
+  };
+
+  renderDeleteIfEdit = (): JSX.Element => {
+    if (this.props.mode === 'edit') {
+      return (
+        <ToggleButton
+          key={-1}
+          type='radio'
+          variant='danger'
+          name='portal'
+          value='delete'
+          checked={this.state.portalType === 'delete'}
+          onChange={(event: React.ChangeEvent<any>) =>
+            this.setState({
+              portalType: event.currentTarget.value
+            })
+          }
+        >
+          Delete
+        </ToggleButton>
+      );
+    }
+    return <></>;
   };
 
   render (): JSX.Element {
@@ -124,6 +156,7 @@ export default class ItemModal extends Component<Props, State> {
                 {portal.title}
               </ToggleButton>
             ))}
+            {this.renderDeleteIfEdit()}
           </ButtonGroup>
           <p />
           {this.renderOptions()}

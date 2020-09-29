@@ -51,18 +51,18 @@ export default class EditPortals extends Component<Props, State> {
 
   hideModal = (): void => {
     this.setState({
-      idToRemove: null
+      idToEdit: null
     });
   };
 
   removePortal = (): void => {
-    this.props.removePortal(this.state.idToRemove ?? '');
+    this.props.removePortal(this.state.idToEdit ?? '');
     this.hideModal();
   };
 
   confirmRemove = (id: string): void => {
     this.setState({
-      idToRemove: id
+      idToEdit: id
     });
   };
 
@@ -112,6 +112,7 @@ export default class EditPortals extends Component<Props, State> {
         <ItemModal
           showModal={this.state.idToEdit !== null}
           hideModal={this.hideItemModal}
+          removePortal={this.removePortal}
           submitForm={this.editPortal}
           mode='edit'
           initialFormValues={
