@@ -220,6 +220,7 @@ class App extends Component<{}, State> {
         <ItemModal
           showModal={this.state.showItemModal}
           hideModal={this.hideItemModal}
+          removePortal={() => {}}
           submitForm={this.createPortal}
           mode='create'
         />
