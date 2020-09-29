@@ -96,6 +96,7 @@ export default class EditPortals extends Component<Props, State> {
                       item={item}
                       confirmRemove={this.confirmRemove}
                       openEditModal={this.openEditModal}
+                      removePortal={this.props.removePortal}
                     />
                   </div>
                 ))}
