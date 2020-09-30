@@ -3,7 +3,7 @@ import React, {
   , Suspense
   , lazy
 } from 'react';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 import LoadingScreen from './LoadingScreen';
 import LoadingPage from './components/LoadingPage';
@@ -136,7 +136,7 @@ class App extends Component<{}, State> {
           ...prevState.contents.main
           , {
             ...portal
-            , id: uuid()
+            , id: v4()
           }
         ]
       }
@@ -168,7 +168,7 @@ class App extends Component<{}, State> {
           ...prevState.contents.main.slice(0, index)
           , {
             ...portal
-            , id: uuid()
+            , id: v4()
           }
           , ...prevState.contents.main.slice(index + 1)
         ]
