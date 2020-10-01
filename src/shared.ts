@@ -1,6 +1,6 @@
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
-export const VERSION = '0.7.0';
+export const VERSION = '0.7.1';
 
 export interface AppContents {
   main: LandingPageItems;
@@ -42,25 +42,25 @@ export const PORTALS = [
 
 export const DEFAULT_PORTALS = [
   {
-    id: uuid()
+    id: v4()
     , type: 'webportal'
     , title: 'Facebook'
     , url: 'https://www.facebook.com'
   }
   , {
-    id: uuid()
+    id: v4()
     , type: 'webportal'
     , title: 'Amazon'
     , url: 'https://www.amazon.com'
   }
   , {
-    id: uuid()
+    id: v4()
     , type: 'webportal'
     , title: 'Netflix'
     , url: 'https://www.netflix.com'
   }
   , {
-    id: uuid()
+    id: v4()
     , type: 'webportal'
     , title: 'Google'
     , url: 'https://www.google.com'
