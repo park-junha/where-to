@@ -17,6 +17,7 @@ import {
   , LandingPageItems
   , NewPortalForm
   , DEFAULT_PORTALS
+  , MAX_PORTALS
 } from './shared';
 
 interface State {
@@ -127,22 +128,27 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
-  //  maybe make this promise-based?
-  createPortal = (portal: NewPortalForm): void => {
-    //  add logic for checking this.state.contents.main.length
-    this.setState(prevState => ({
-      ...prevState
-      , contents: {
-        ...prevState.contents
-        , main: [
-          ...prevState.contents.main
-          , {
-            ...portal
-            , id: v4()
+  createPortal = (portal: NewPortalForm): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      if (this.state.contents.main.length >= MAX_PORTALS) {
+        reject('ERROR: Maximum number of portals reached.');
+      } else {
+        this.setState(prevState => ({
+          ...prevState
+          , contents: {
+            ...prevState.contents
+            , main: [
+              ...prevState.contents.main
+              , {
+                ...portal
+                , id: v4()
+              }
+            ]
           }
-        ]
+        }), this.saveCurrentState);
+        resolve('Success!');
       }
-    }), this.saveCurrentState);
+    });
   };
 
   editPortals = (newPortals: LandingPageItems): void => {

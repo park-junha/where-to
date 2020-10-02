@@ -29,6 +29,8 @@ export interface NewPortalForm {
   url: string;
 };
 
+export const MAX_PORTALS = 30;
+
 export const PORTALS = [
   {
     'name': 'webportal'

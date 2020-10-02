@@ -62,9 +62,12 @@ export default class EditPortals extends Component<Props, State> {
     });
   };
 
-  editPortal = (portal: NewPortalForm): void => {
-    this.props.editPortal(this.state.idToEdit ?? '', portal);
-    this.hideItemModal();
+  editPortal = (portal: NewPortalForm): Promise<string> => {
+    return new Promise<string>((resolve) => {
+      this.props.editPortal(this.state.idToEdit ?? '', portal);
+      this.hideItemModal();
+      resolve('SUCCESS');
+    });
   };
 
   render (): JSX.Element {
