@@ -127,7 +127,9 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
+  //  maybe make this promise-based?
   createPortal = (portal: NewPortalForm): void => {
+    //  add logic for checking this.state.contents.main.length
     this.setState(prevState => ({
       ...prevState
       , contents: {
