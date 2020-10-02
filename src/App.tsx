@@ -25,6 +25,7 @@ interface State {
   contents: AppContents;
   showItemModal: boolean;
   showResetModal: boolean;
+  maxPortals: number;
 }
 
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -44,6 +45,16 @@ const loadContents = (): AppContents => {
   }
 };
 
+const loadMaxPortals = (): number => {
+  let storedMaxPortals = localStorage.getItem('maxPortals');
+  if (storedMaxPortals === null) {
+    localStorage.setItem('maxPortals', MAX_PORTALS.toString());
+    return MAX_PORTALS;
+  } else {
+    return parseInt(storedMaxPortals);
+  }
+};
+
 const setDefaultContents = (): LandingPageItems => {
   return DEFAULT_PORTALS ?? [];
 };
@@ -52,6 +63,7 @@ class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage'
     , contents: loadContents()
+    , maxPortals: loadMaxPortals()
     , showItemModal: false
     , showResetModal: false
   };
@@ -130,7 +142,7 @@ class App extends Component<{}, State> {
 
   createPortal = (portal: NewPortalForm): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      if (this.state.contents.main.length >= MAX_PORTALS) {
+      if (this.state.contents.main.length >= this.state.maxPortals) {
         reject('ERROR: Maximum number of portals reached.');
       } else {
         this.setState(prevState => ({
