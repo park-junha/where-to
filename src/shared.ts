@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '0.7.1';
+export const VERSION = '0.7.2';
 
 export interface AppContents {
   main: LandingPageItems;
@@ -28,6 +28,8 @@ export interface NewPortalForm {
   title: string;
   url: string;
 };
+
+export const MAX_PORTALS = 30;
 
 export const PORTALS = [
   {

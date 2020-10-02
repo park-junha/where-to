@@ -17,6 +17,7 @@ import {
   , LandingPageItems
   , NewPortalForm
   , DEFAULT_PORTALS
+  , MAX_PORTALS
 } from './shared';
 
 interface State {
@@ -24,6 +25,7 @@ interface State {
   contents: AppContents;
   showItemModal: boolean;
   showResetModal: boolean;
+  maxPortals: number;
 }
 
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -43,6 +45,16 @@ const loadContents = (): AppContents => {
   }
 };
 
+const loadMaxPortals = (): number => {
+  let storedMaxPortals = localStorage.getItem('maxPortals');
+  if (storedMaxPortals === null) {
+    localStorage.setItem('maxPortals', MAX_PORTALS.toString());
+    return MAX_PORTALS;
+  } else {
+    return parseInt(storedMaxPortals);
+  }
+};
+
 const setDefaultContents = (): LandingPageItems => {
   return DEFAULT_PORTALS ?? [];
 };
@@ -51,6 +63,7 @@ class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage'
     , contents: loadContents()
+    , maxPortals: loadMaxPortals()
     , showItemModal: false
     , showResetModal: false
   };
@@ -127,20 +140,27 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
-  createPortal = (portal: NewPortalForm): void => {
-    this.setState(prevState => ({
-      ...prevState
-      , contents: {
-        ...prevState.contents
-        , main: [
-          ...prevState.contents.main
-          , {
-            ...portal
-            , id: v4()
+  createPortal = (portal: NewPortalForm): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      if (this.state.contents.main.length >= this.state.maxPortals) {
+        reject('ERROR: Maximum number of portals reached.');
+      } else {
+        this.setState(prevState => ({
+          ...prevState
+          , contents: {
+            ...prevState.contents
+            , main: [
+              ...prevState.contents.main
+              , {
+                ...portal
+                , id: v4()
+              }
+            ]
           }
-        ]
+        }), this.saveCurrentState);
+        resolve('Success!');
       }
-    }), this.saveCurrentState);
+    });
   };
 
   editPortals = (newPortals: LandingPageItems): void => {

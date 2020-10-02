@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import {
   Modal
+  , Alert
   , Button
   , ButtonGroup
   , Form
@@ -19,7 +20,7 @@ interface Props {
   showModal: boolean;
   hideModal: () => void;
   removePortal: () => void;
-  submitForm: (portal: NewPortalForm) => void;
+  submitForm: (portal: NewPortalForm) => Promise<string>;
   mode: string;
   initialFormValues?: NewPortalForm;
 }
@@ -31,10 +32,11 @@ interface State {
 interface WebPortalOptionsState {
   title: string;
   url: string;
+  submitError: string;
 }
 
 interface WebPortalOptionsProps {
-  submitForm: (portal: NewPortalForm) => void;
+  submitForm: (portal: NewPortalForm) => Promise<string>;
   submitLabel: string;
   hideModal: () => void;
   initialFormValues?: NewPortalForm;
@@ -176,6 +178,7 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
   state: WebPortalOptionsState = {
     title: ''
     , url: ''
+    , submitError: ''
   };
 
   componentDidMount(): void {
@@ -211,8 +214,17 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
       title: this.state.title
       , type: 'webportal'
       , url: this.state.url
+    })
+    .then(() => {
+      this.props.hideModal();
+    })
+    .catch((err) => {
+      this.setState(prevState => ({
+        ...prevState
+        , submitError: err
+      }));
+      console.error(err);
     });
-    this.props.hideModal();
   };
 
   render (): JSX.Element {
@@ -253,6 +265,13 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
             Cancel
           </Button>
         </Form>
+        <Alert
+          id='item-modal-alert'
+          show={this.state.submitError !== ''}
+          variant='danger'
+        >
+          {this.state.submitError}
+        </Alert>
       </div>
     );
   };
