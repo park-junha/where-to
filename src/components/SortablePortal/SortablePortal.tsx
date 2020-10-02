@@ -7,7 +7,7 @@ import {
 
 import {
   LandingPageItem
-} from '../shared';
+} from '../../shared';
 
 interface Props {
   item: LandingPageItem;

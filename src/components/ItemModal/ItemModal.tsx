@@ -13,8 +13,8 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import {
   NewPortalForm
   , PORTALS
-} from '../shared';
-import ConfirmRemove from './ConfirmRemove';
+} from '../../shared';
+import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
 
 interface Props {
   showModal: boolean;

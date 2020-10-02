@@ -8,11 +8,11 @@ import {
   , Col
 } from 'react-bootstrap';
 
-import WebPortal from './WebPortal';
+import WebPortal from '../WebPortal/WebPortal';
 import {
   LandingPageItems
   , LandingPageItem
-} from '../shared';
+} from '../../shared';
 
 interface Props {
   nofade?: boolean;

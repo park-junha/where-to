@@ -13,9 +13,9 @@ import {
 import {
   LandingPageItems
   , NewPortalForm
-} from '../shared';
-import SortablePortal from './SortablePortal';
-import ItemModal from './ItemModal';
+} from '../../shared';
+import SortablePortal from '../SortablePortal/SortablePortal';
+import ItemModal from '../ItemModal/ItemModal';
 
 interface Props {
   contents: LandingPageItems;

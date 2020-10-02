@@ -5,13 +5,13 @@ import React, {
 } from 'react';
 import { v4 } from 'uuid';
 
-import LoadingScreen from './LoadingScreen';
-import LoadingPage from './components/LoadingPage';
-import Footer from './components/Footer';
-import LandingPage from './components/LandingPage';
-import EditPortals from './components/EditPortals';
-import ResetModal from './components/ResetModal';
-import ItemModal from './components/ItemModal';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
+import LoadingPage from './components/LoadingPage/LoadingPage';
+import Footer from './components/Footer/Footer';
+import LandingPage from './components/LandingPage/LandingPage';
+import EditPortals from './components/EditPortals/EditPortals';
+import ResetModal from './components/ResetModal/ResetModal';
+import ItemModal from './components/ItemModal/ItemModal';
 import {
   AppContents
   , LandingPageItems
@@ -28,7 +28,7 @@ interface State {
   maxPortals: number;
 }
 
-const NotFound = lazy(() => import('./components/NotFound'));
+const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 const loadContents = (): AppContents => {
   let storedContents = localStorage.getItem('contentsMain');

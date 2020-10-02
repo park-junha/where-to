@@ -15,7 +15,7 @@ import {
 import {
   GrPowerReset
 } from 'react-icons/gr';
-import { VERSION } from '../shared';
+import { VERSION } from '../../shared';
 
 interface Props {
   currentComponent: string;
