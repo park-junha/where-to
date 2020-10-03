@@ -1,9 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Button
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 
 interface Props {
   removePortal: () => void;

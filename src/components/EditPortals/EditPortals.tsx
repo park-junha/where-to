@@ -1,19 +1,7 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Container
-  , Row
-  , Col
-} from 'react-bootstrap';
-import {
-  ReactSortable
-} from 'react-sortablejs';
-
-import {
-  LandingPageItems
-  , NewPortalForm
-} from '../../shared';
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { ReactSortable } from 'react-sortablejs';
+import { LandingPageItems, NewPortalForm } from '../../shared';
 import SortablePortal from '../SortablePortal/SortablePortal';
 import ItemModal from '../ItemModal/ItemModal';
 

@@ -1,19 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Modal
-  , Alert
-  , Button
-  , ButtonGroup
-  , Form
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Modal, Alert, Button, ButtonGroup, Form } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
-import {
-  NewPortalForm
-  , PORTALS
-} from '../../shared';
+import { NewPortalForm, PORTALS } from '../../shared';
 import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
 
 interface Props {
@@ -168,17 +157,17 @@ export default class ItemModal extends Component<Props, State> {
   };
 }
 
-class WebPortalOptions extends Component<WebPortalOptionsProps
-  , WebPortalOptionsState> {
+class WebPortalOptions extends Component<WebPortalOptionsProps,
+  WebPortalOptionsState> {
   constructor(props: WebPortalOptionsProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   };
 
   state: WebPortalOptionsState = {
-    title: ''
-    , url: ''
-    , submitError: ''
+    title: '',
+    url: '',
+    submitError: ''
   };
 
   componentDidMount(): void {
@@ -186,8 +175,8 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
         this.props.initialFormValues.type === 'webportal') {
       this.setState((prevState, prevProps) => ({
         //  TODO: find a better way to handle potential undefined props?
-        title: prevProps?.initialFormValues?.title ?? ''
-        , url: prevProps?.initialFormValues?.url ?? ''
+        title: prevProps?.initialFormValues?.title ?? '',
+        url: prevProps?.initialFormValues?.url ?? ''
       }));
     }
   };
@@ -211,17 +200,17 @@ class WebPortalOptions extends Component<WebPortalOptionsProps
 
   submitForm = (): void => {
     this.props.submitForm({
-      title: this.state.title
-      , type: 'webportal'
-      , url: this.state.url
+      title: this.state.title,
+      type: 'webportal',
+      url: this.state.url
     })
     .then(() => {
       this.props.hideModal();
     })
     .catch((err) => {
       this.setState(prevState => ({
-        ...prevState
-        , submitError: err
+        ...prevState,
+        submitError: err
       }));
       console.error(err);
     });

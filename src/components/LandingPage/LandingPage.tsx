@@ -1,18 +1,8 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Container
-  , Button
-  , Row
-  , Col
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Container, Button, Row, Col } from 'react-bootstrap';
 
 import WebPortal from '../WebPortal/WebPortal';
-import {
-  LandingPageItems
-  , LandingPageItem
-} from '../../shared';
+import { LandingPageItems, LandingPageItem } from '../../shared';
 
 interface Props {
   nofade?: boolean;

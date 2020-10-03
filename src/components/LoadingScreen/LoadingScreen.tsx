@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
 
 export default class LoadingScreen extends Component {

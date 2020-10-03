@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Button
-} from 'react-bootstrap';
-
-import {
-  LandingPageItem
-} from '../../shared';
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { LandingPageItem } from '../../shared';
 
 interface Props {
   item: LandingPageItem;
@@ -31,8 +24,8 @@ export default class SortablePortal extends Component<Props> {
           <Button
             className='landing-button-big shake-portal'
             style={{
-              animationDelay: delay
-              , animationDuration: duration
+              animationDelay: delay,
+              animationDuration: duration
             }}
             size='lg'
             variant='secondary'
@@ -50,8 +43,8 @@ export default class SortablePortal extends Component<Props> {
           <Button
             className='landing-button-big shake-portal'
             style={{
-              animationDelay: delay
-              , animationDuration: duration
+              animationDelay: delay,
+              animationDuration: duration
             }}
             size='lg'
             variant='dark'
