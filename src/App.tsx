@@ -1,23 +1,19 @@
-import React, {
-  Component
-  , Suspense
-  , lazy
-} from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { v4 } from 'uuid';
 
-import LoadingScreen from './LoadingScreen';
-import LoadingPage from './components/LoadingPage';
-import Footer from './components/Footer';
-import LandingPage from './components/LandingPage';
-import EditPortals from './components/EditPortals';
-import ResetModal from './components/ResetModal';
-import ItemModal from './components/ItemModal';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
+import LoadingPage from './components/LoadingPage/LoadingPage';
+import Footer from './components/Footer/Footer';
+import LandingPage from './components/LandingPage/LandingPage';
+import EditPortals from './components/EditPortals/EditPortals';
+import ResetModal from './components/ResetModal/ResetModal';
+import ItemModal from './components/ItemModal/ItemModal';
 import {
-  AppContents
-  , LandingPageItems
-  , NewPortalForm
-  , DEFAULT_PORTALS
-  , MAX_PORTALS
+  AppContents,
+  LandingPageItems,
+  NewPortalForm,
+  DEFAULT_PORTALS,
+  MAX_PORTALS
 } from './shared';
 
 interface State {
@@ -28,7 +24,7 @@ interface State {
   maxPortals: number;
 }
 
-const NotFound = lazy(() => import('./components/NotFound'));
+const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 const loadContents = (): AppContents => {
   let storedContents = localStorage.getItem('contentsMain');
@@ -40,8 +36,8 @@ const loadContents = (): AppContents => {
     main = JSON.parse(storedContents ?? '[]');
   }
   return {
-    'main': main
-    , 'footer': []
+    'main': main,
+    'footer': []
   }
 };
 
@@ -61,11 +57,11 @@ const setDefaultContents = (): LandingPageItems => {
 
 class App extends Component<{}, State> {
   state: State = {
-    component: 'LandingPage'
-    , contents: loadContents()
-    , maxPortals: loadMaxPortals()
-    , showItemModal: false
-    , showResetModal: false
+    component: 'LandingPage',
+    contents: loadContents(),
+    maxPortals: loadMaxPortals(),
+    showItemModal: false,
+    showResetModal: false
   };
 
   renderComponent = (): JSX.Element => {
@@ -146,14 +142,14 @@ class App extends Component<{}, State> {
         reject('ERROR: Maximum number of portals reached.');
       } else {
         this.setState(prevState => ({
-          ...prevState
-          , contents: {
-            ...prevState.contents
-            , main: [
-              ...prevState.contents.main
-              , {
-                ...portal
-                , id: v4()
+          ...prevState,
+          contents: {
+            ...prevState.contents,
+            main: [
+              ...prevState.contents.main,
+              {
+                ...portal,
+                id: v4()
               }
             ]
           }
@@ -165,10 +161,10 @@ class App extends Component<{}, State> {
 
   editPortals = (newPortals: LandingPageItems): void => {
     this.setState(prevState => ({
-      ...prevState
-      , contents: {
-        ...prevState.contents
-        , main: newPortals
+      ...prevState,
+      contents: {
+        ...prevState.contents,
+        main: newPortals
       }
     }), this.saveCurrentState);
   };
@@ -181,16 +177,16 @@ class App extends Component<{}, State> {
       return;
     };
     this.setState(prevState => ({
-      ...prevState
-      , contents: {
-        ...prevState.contents
-        , main: [
-          ...prevState.contents.main.slice(0, index)
-          , {
-            ...portal
-            , id: v4()
-          }
-          , ...prevState.contents.main.slice(index + 1)
+      ...prevState,
+      contents: {
+        ...prevState.contents,
+        main: [
+          ...prevState.contents.main.slice(0, index),
+          {
+            ...portal,
+            id: v4()
+          },
+          ...prevState.contents.main.slice(index + 1)
         ]
       }
     }), this.saveCurrentState);
@@ -198,13 +194,11 @@ class App extends Component<{}, State> {
 
   removePortal = (idToRemove: string): void => {
     this.setState(prevState => ({
-      ...prevState
-      , contents: {
-        ...prevState.contents
-        , main: [
-          ...prevState.contents.main.filter(
-            item => item.id !== idToRemove
-          )
+      ...prevState,
+      contents: {
+        ...prevState.contents,
+        main: [
+          ...prevState.contents.main.filter(item => item.id !== idToRemove)
         ]
       }
     }), this.saveCurrentState);
@@ -213,8 +207,8 @@ class App extends Component<{}, State> {
   resetPortals = (): void => {
     localStorage.removeItem('contentsMain');
     this.setState({
-      contents: loadContents()
-      , component: 'LandingPageNoFade'
+      contents: loadContents(),
+      component: 'LandingPageNoFade'
     });
     this.hideResetModal();
   };

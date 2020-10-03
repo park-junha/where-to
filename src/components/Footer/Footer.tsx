@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Nav
-  , Navbar
-  , Button
-//, Dropdown
-} from 'react-bootstrap';
-import {
-  FiEdit
-, FiPlus
-} from 'react-icons/fi';
-import {
-  FcCancel
-} from 'react-icons/fc';
-import {
-  GrPowerReset
-} from 'react-icons/gr';
-import { VERSION } from '../shared';
+import { Nav, Navbar, Button } from 'react-bootstrap';
+import { FiEdit, FiPlus } from 'react-icons/fi';
+import { FcCancel } from 'react-icons/fc';
+import { GrPowerReset } from 'react-icons/gr';
+import { VERSION } from '../../shared';
 
 interface Props {
   currentComponent: string;

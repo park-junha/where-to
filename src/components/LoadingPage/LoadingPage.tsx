@@ -1,12 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Container
-  , Row
-  , Col
-  , Spinner
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 export default class LoadingPage extends Component {
   render (): JSX.Element {

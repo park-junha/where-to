@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '0.7.2';
+export const VERSION = '0.8.0';
 
 export interface AppContents {
   main: LandingPageItems;
@@ -33,38 +33,38 @@ export const MAX_PORTALS = 30;
 
 export const PORTALS = [
   {
-    'name': 'webportal'
-    , 'title': 'Web Portal'
-  }
-  , {
-    'name': 'widget'
-    , 'title': 'Widget'
+    'name': 'webportal',
+    'title': 'Web Portal'
+  },
+  {
+    'name': 'widget',
+    'title': 'Widget'
   }
 ];
 
 export const DEFAULT_PORTALS = [
   {
-    id: v4()
-    , type: 'webportal'
-    , title: 'Facebook'
-    , url: 'https://www.facebook.com'
-  }
-  , {
-    id: v4()
-    , type: 'webportal'
-    , title: 'Amazon'
-    , url: 'https://www.amazon.com'
-  }
-  , {
-    id: v4()
-    , type: 'webportal'
-    , title: 'Netflix'
-    , url: 'https://www.netflix.com'
-  }
-  , {
-    id: v4()
-    , type: 'webportal'
-    , title: 'Google'
-    , url: 'https://www.google.com'
+    id: v4(),
+    type: 'webportal',
+    title: 'Facebook',
+    url: 'https://www.facebook.com'
+  },
+  {
+    id: v4(),
+    type: 'webportal',
+    title: 'Amazon',
+    url: 'https://www.amazon.com'
+  },
+  {
+    id: v4(),
+    type: 'webportal',
+    title: 'Netflix',
+    url: 'https://www.netflix.com'
+  },
+  {
+    id: v4(),
+    type: 'webportal',
+    title: 'Google',
+    url: 'https://www.google.com'
   }
 ];
