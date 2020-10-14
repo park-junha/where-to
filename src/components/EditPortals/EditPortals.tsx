@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ReactSortable } from 'react-sortablejs';
-import { LandingPageItems, NewPortalForm } from '../../shared';
+import {
+  LandingPageItems,
+  NewPortalForm,
+  PortalFormType
+} from '../../shared';
 import SortablePortal from '../SortablePortal/SortablePortal';
 import ItemModal from '../ItemModal/ItemModal';
 
@@ -10,6 +14,8 @@ interface Props {
   editPortals: (newPortals: LandingPageItems) => void;
   editPortal: (idToEdit: string, portal: NewPortalForm) => void;
   removePortal: (id: string) => void;
+  validatePortalForm: (portal: NewPortalForm, formType: PortalFormType)
+    => Promise<string>;
 }
 
 interface State {
@@ -51,10 +57,16 @@ export default class EditPortals extends Component<Props, State> {
   };
 
   editPortal = (portal: NewPortalForm): Promise<string> => {
-    return new Promise<string>((resolve) => {
-      this.props.editPortal(this.state.idToEdit ?? '', portal);
-      this.hideItemModal();
-      resolve('SUCCESS');
+    return new Promise<string>((resolve, reject) => {
+      this.props.validatePortalForm(portal, PortalFormType.edit)
+        .then(() => {
+          this.props.editPortal(this.state.idToEdit ?? '', portal);
+          this.hideItemModal();
+          resolve('');
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   };
 

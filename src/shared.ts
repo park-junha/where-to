@@ -2,6 +2,11 @@ import { v4 } from 'uuid';
 
 export const VERSION = '0.8.1';
 
+export enum PortalFormType {
+  add = 0,
+  edit
+};
+
 export interface AppContents {
   main: LandingPageItems;
   footer: FooterLayout;
