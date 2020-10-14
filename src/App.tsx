@@ -142,6 +142,12 @@ class App extends Component<{}, State> {
   validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
     Promise<string> => {
     return new Promise<string>((resolve, reject) => {
+      if (portal.title.length <= 0) {
+        reject('ERROR: Please enter a name.');
+      }
+      if (portal.url.length <= 0) {
+        reject('ERROR: Please enter a URL.');
+      }
       if (formType === PortalFormType.add &&
         (this.state.contents.main.length >= this.state.maxPortals)) {
         reject('ERROR: Maximum number of portals reached.');
