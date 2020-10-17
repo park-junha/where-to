@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import LandingPage from './LandingPage';
-import App from '../App';
+import App from '../../App';
 
 const testContent = [
   {
