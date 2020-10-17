@@ -1,5 +1,6 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { v4 } from 'uuid';
+import { isUri } from 'valid-url';
 
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import LoadingPage from './components/LoadingPage/LoadingPage';
@@ -12,6 +13,7 @@ import {
   AppContents,
   LandingPageItems,
   NewPortalForm,
+  PortalFormType,
   DEFAULT_PORTALS,
   MAX_PORTALS
 } from './shared';
@@ -88,6 +90,7 @@ class App extends Component<{}, State> {
           editPortals={this.editPortals}
           editPortal={this.editPortal}
           removePortal={this.removePortal}
+          validatePortalForm={this.validatePortalForm}
         />
       );
     case 'LoadWebsite':
@@ -136,26 +139,48 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
+  validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
+    Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      if (portal.title.length <= 0) {
+        reject('ERROR: Please enter a name.');
+      }
+      if (portal.url.length <= 0) {
+        reject('ERROR: Please enter a URL.');
+      }
+      if (formType === PortalFormType.add &&
+        (this.state.contents.main.length >= this.state.maxPortals)) {
+        reject('ERROR: Maximum number of portals reached.');
+      }
+      if (!isUri(portal.url)) {
+        reject('ERROR: Invalid URL.')
+      }
+      resolve('');
+    });
+  };
+
   createPortal = (portal: NewPortalForm): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      if (this.state.contents.main.length >= this.state.maxPortals) {
-        reject('ERROR: Maximum number of portals reached.');
-      } else {
-        this.setState(prevState => ({
-          ...prevState,
-          contents: {
-            ...prevState.contents,
-            main: [
-              ...prevState.contents.main,
-              {
-                ...portal,
-                id: v4()
-              }
-            ]
-          }
-        }), this.saveCurrentState);
-        resolve('Success!');
-      }
+      this.validatePortalForm(portal, PortalFormType.add)
+        .then(() => {
+          this.setState(prevState => ({
+            ...prevState,
+            contents: {
+              ...prevState.contents,
+              main: [
+                ...prevState.contents.main,
+                {
+                  ...portal,
+                  id: v4()
+                }
+              ]
+            }
+          }), this.saveCurrentState);
+          resolve('');
+        })
+        .catch((err) => {
+          reject(err)
+        });
     });
   };
 
