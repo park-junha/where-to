@@ -16,6 +16,7 @@ export default class LandingPage extends Component<Props> {
     case 'webportal':
       return (
         <WebPortal
+          key={item.id}
           item={item}
           switchComponent={this.props.switchComponent}
         />
@@ -23,6 +24,7 @@ export default class LandingPage extends Component<Props> {
     default:
       return (
         <Button
+          key={item.id}
           className='landing-button-big'
           size='lg'
           variant='dark'

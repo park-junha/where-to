@@ -93,8 +93,11 @@ export default class EditPortals extends Component<Props, State> {
                 list={this.props.contents}
                 setList={newState => this.props.editPortals(newState)}
               >
-                {this.props.contents.map(item => (
-                  <div style={{display: 'inline-block'}}>
+                {this.props.contents.map((item) => (
+                  <div
+                    key={item.id}
+                    style={{display: 'inline-block'}}
+                  >
                     <SortablePortal
                       item={item}
                       confirmRemove={this.confirmRemove}

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '0.8.1';
+export const VERSION = '0.8.2';
 
 export enum PortalFormType {
   add = 0,
