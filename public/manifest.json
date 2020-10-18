@@ -1,7 +1,7 @@
 {
   "short_name": "Where To",
   "name": "Where To",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "manifest_version": 2,
   "description": "Customizable New Tab Extension",
   "permissions": [],
