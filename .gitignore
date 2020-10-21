@@ -11,7 +11,7 @@
 # production
 /build
 build.zip
-build.firefox.zip
+src.zip
 
 # misc
 *.swp

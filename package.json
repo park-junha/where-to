@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
@@ -77,7 +77,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && scripts/zip.sh",
     "bump": "node scripts/bump.js",
     "test": "node scripts/test.js"
   },
