@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
