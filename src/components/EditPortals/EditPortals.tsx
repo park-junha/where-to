@@ -115,7 +115,14 @@ export default class EditPortals extends Component<Props, State> {
           showModal={this.state.idToEdit !== null}
           hideModal={this.hideItemModal}
           removePortal={this.removePortal}
-          submitForm={this.editPortal}
+          submitPortalForm={this.editPortal}
+          submitFolderForm={(portal: any) => {
+            return new Promise<string>((resolve) => {
+              let message: string = 'i need to be implemented';
+              console.warn(message);
+              resolve(message);
+            })
+          }} // TODO: implement me
           mode='edit'
           initialFormValues={
             this.props.contents[this.props.contents.findIndex(i =>

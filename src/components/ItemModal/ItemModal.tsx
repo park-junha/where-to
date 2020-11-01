@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { Modal, ButtonGroup } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { NewPortalForm, PORTALS } from '../../shared';
+import { NewPortalForm, FolderForm, PORTALS } from '../../shared';
 import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
 import WebPortalOptions from '../WebPortalOptions/WebPortalOptions';
+import FolderOptions from '../FolderOptions/FolderOptions';
 
 interface Props {
   showModal: boolean;
   hideModal: () => void;
   removePortal: () => void;
-  submitForm: (portal: NewPortalForm) => Promise<string>;
+  submitPortalForm: (portal: NewPortalForm) => Promise<string>;
+  submitFolderForm: (portal: FolderForm) => Promise<string>;
   mode: string;
-  initialFormValues?: NewPortalForm;
+  initialFormValues?: NewPortalForm | FolderForm;
 }
 
 interface State {
@@ -20,7 +22,8 @@ interface State {
 
 export default class ItemModal extends Component<Props, State> {
   state: State = {
-    portalType: PORTALS[0].name ?? 'N/A'
+    // TODO: not working as intended?
+    portalType: this.props.initialFormValues?.type ?? PORTALS[0].name
   };
 
   renderOptions = (): JSX.Element => {
@@ -28,7 +31,16 @@ export default class ItemModal extends Component<Props, State> {
     case 'webportal':
       return (
         <WebPortalOptions
-          submitForm={this.props.submitForm}
+          submitForm={this.props.submitPortalForm}
+          hideModal={this.props.hideModal}
+          submitLabel={this.submitLabel()}
+          initialFormValues={this.props.initialFormValues ?? undefined}
+        />
+      );
+    case 'folder':
+      return (
+        <FolderOptions
+          submitForm={this.props.submitFolderForm}
           hideModal={this.props.hideModal}
           submitLabel={this.submitLabel()}
           initialFormValues={this.props.initialFormValues ?? undefined}

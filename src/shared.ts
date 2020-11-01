@@ -18,7 +18,7 @@ export interface LandingPageItem {
   type: string;
   id: string;
   title: string;
-  url: string;
+  url?: string;
 };
 
 export interface FooterLayout extends Array<FooterItem>{};
@@ -29,9 +29,14 @@ export interface FooterItem {
 };
 
 export interface NewPortalForm {
-  type: string;
+  type: string; // 'webportal'
   title: string;
-  url: string;
+  url?: string;
+};
+
+export interface FolderForm {
+  type: string; // 'folder'
+  title: string;
 };
 
 export const MAX_PORTALS = 30;

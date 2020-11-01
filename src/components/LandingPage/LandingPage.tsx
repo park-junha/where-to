@@ -21,6 +21,18 @@ export default class LandingPage extends Component<Props> {
           switchComponent={this.props.switchComponent}
         />
       );
+    case 'folder':
+      return (
+        <Button
+          key={item.id}
+          className='landing-button-big'
+          size='lg'
+          variant='dark'
+          disabled
+        >
+          <span>implement me!</span>
+        </Button>
+      );
     default:
       return (
         <Button

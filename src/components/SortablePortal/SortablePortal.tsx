@@ -35,6 +35,25 @@ export default class SortablePortal extends Component<Props> {
           </Button>
         </span>
       );
+    case 'folder':
+      return (
+        <span
+          key={this.props.item.id}
+        >
+          <Button
+            className='landing-button-big shake-portal'
+            style={{
+              animationDelay: delay,
+              animationDuration: duration
+            }}
+            size='lg'
+            variant='dark'
+            onClick={() => this.props.openEditModal(this.props.item.id)}
+          >
+            <span>{this.props.item.title}</span>
+          </Button>
+        </span>
+      );
     default:
       return (
         <span

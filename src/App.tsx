@@ -13,6 +13,7 @@ import {
   AppContents,
   LandingPageItems,
   NewPortalForm,
+  FolderForm,
   PortalFormType,
   DEFAULT_PORTALS,
   MAX_PORTALS
@@ -90,7 +91,7 @@ class App extends Component<{}, State> {
           editPortals={this.editPortals}
           editPortal={this.editPortal}
           removePortal={this.removePortal}
-          validatePortalForm={this.validatePortalForm}
+          validatePortalForm={this.validateForm}
         />
       );
     case 'LoadWebsite':
@@ -139,21 +140,30 @@ class App extends Component<{}, State> {
       JSON.stringify(this.state.contents.main));
   };
 
-  validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
-    Promise<string> => {
+  validateWebPortalUrl = (portal: NewPortalForm): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      if ((portal.url ?? '').length <= 0) {
+        reject('ERROR: Please enter a URL.');
+      }
+      if (!isUri(portal.url ?? '')) {
+        reject('ERROR: Invalid URL.');
+      }
+      resolve('');
+    })
+  }
+
+  validateForm = (portal: NewPortalForm | FolderForm,
+    formType: PortalFormType): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       if (portal.title.length <= 0) {
         reject('ERROR: Please enter a name.');
       }
-      if (portal.url.length <= 0) {
-        reject('ERROR: Please enter a URL.');
+      if (portal.type === 'webportal') {
+        this.validateWebPortalUrl(portal).catch((err) => { reject(err) })
       }
       if (formType === PortalFormType.add &&
         (this.state.contents.main.length >= this.state.maxPortals)) {
         reject('ERROR: Maximum number of portals reached.');
-      }
-      if (!isUri(portal.url)) {
-        reject('ERROR: Invalid URL.')
       }
       resolve('');
     });
@@ -161,7 +171,7 @@ class App extends Component<{}, State> {
 
   createPortal = (portal: NewPortalForm): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      this.validatePortalForm(portal, PortalFormType.add)
+      this.validateForm(portal, PortalFormType.add)
         .then(() => {
           this.setState(prevState => ({
             ...prevState,
@@ -171,6 +181,31 @@ class App extends Component<{}, State> {
                 ...prevState.contents.main,
                 {
                   ...portal,
+                  id: v4()
+                }
+              ]
+            }
+          }), this.saveCurrentState);
+          resolve('');
+        })
+        .catch((err) => {
+          reject(err)
+        });
+    });
+  };
+
+  createFolder = (folder: FolderForm): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      this.validateForm(folder, PortalFormType.add)
+        .then(() => {
+          this.setState(prevState => ({
+            ...prevState,
+            contents: {
+              ...prevState.contents,
+              main: [
+                ...prevState.contents.main,
+                {
+                  ...folder,
                   id: v4()
                 }
               ]
@@ -260,7 +295,8 @@ class App extends Component<{}, State> {
           showModal={this.state.showItemModal}
           hideModal={this.hideItemModal}
           removePortal={() => {}}
-          submitForm={this.createPortal}
+          submitPortalForm={this.createPortal}
+          submitFolderForm={this.createFolder}
           mode='create'
         />
         <ResetModal
