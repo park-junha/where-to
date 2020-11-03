@@ -53,7 +53,7 @@ it('should throw correct error when app has too many portals',
       url: 'https://linkedin.com'
     }
   ];
-  app.state.maxPortals = 2;
+  app.state.contents.settings.maxPortals = 2;
   const portalForm = {
     type: 'shortcut',
     title: 'Google',

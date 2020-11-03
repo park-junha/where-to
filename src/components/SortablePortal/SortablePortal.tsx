@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { LandingPageItem } from '../../shared';
+import { LandingPageItem, calculatePortalStyles } from '../../shared';
 
 interface Props {
   item: LandingPageItem;
+  size: number;
   confirmRemove: (id: string) => void;
   openEditModal: (id: string) => void;
   removePortal: (id: string) => void;
@@ -24,10 +25,10 @@ export default class SortablePortal extends Component<Props> {
         >
           <Button
             className='landing-button-big shake-portal'
-            style={{
+            style={Object.assign({
               animationDelay: delay,
               animationDuration: duration
-            }}
+            }, calculatePortalStyles(this.props.size))}
             size='lg'
             variant='secondary'
             onClick={() => this.props.openEditModal(this.props.item.id)}
@@ -43,10 +44,10 @@ export default class SortablePortal extends Component<Props> {
         >
           <Button
             className='landing-button-big shake-portal'
-            style={{
+            style={Object.assign({
               animationDelay: delay,
               animationDuration: duration
-            }}
+            }, calculatePortalStyles(this.props.size))}
             size='lg'
             variant='dark'
             onClick={() => this.props.removePortal(this.props.item.id)}

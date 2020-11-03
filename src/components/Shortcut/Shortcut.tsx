@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { LandingPageItem } from '../../shared';
+import { LandingPageItem, calculatePortalStyles } from '../../shared';
 
 interface Props {
   item: LandingPageItem;
+  size: number;
   switchComponent: (newComponent: string) => void;
 }
 
@@ -16,6 +17,7 @@ export default class Shortcut extends Component<Props> {
         <Button
           className='landing-button-big'
           size='lg'
+          style={calculatePortalStyles(this.props.size)}
           variant='secondary'
           onClick={() => this.props.switchComponent('LoadWebsite')}
         >

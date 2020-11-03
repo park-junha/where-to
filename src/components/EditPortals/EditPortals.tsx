@@ -11,6 +11,7 @@ import ItemModal from '../ItemModal/ItemModal';
 
 interface Props {
   contents: LandingPageItems;
+  portalSize: number;
   editPortals: (newPortals: LandingPageItems) => void;
   editPortal: (idToEdit: string, portal: NewPortalForm) => void;
   removePortal: (id: string) => void;
@@ -100,6 +101,7 @@ export default class EditPortals extends Component<Props, State> {
                   >
                     <SortablePortal
                       item={item}
+                      size={this.props.portalSize}
                       confirmRemove={this.confirmRemove}
                       openEditModal={this.openEditModal}
                       removePortal={this.props.removePortal}

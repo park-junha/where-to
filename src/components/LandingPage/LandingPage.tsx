@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 
 import Shortcut from '../Shortcut/Shortcut';
-import { LandingPageItems, LandingPageItem } from '../../shared';
+import {
+  LandingPageItems,
+  LandingPageItem,
+  calculatePortalStyles
+} from '../../shared';
 
 interface Props {
   nofade?: boolean;
+  portalSize: number;
   contents: LandingPageItems;
   switchComponent: (newComponent: string) => void;
 }
@@ -19,6 +24,7 @@ export default class LandingPage extends Component<Props> {
         <Shortcut
           key={item.id}
           item={item}
+          size={this.props.portalSize}
           switchComponent={this.props.switchComponent}
         />
       );
@@ -27,6 +33,7 @@ export default class LandingPage extends Component<Props> {
         <Button
           key={item.id}
           className='landing-button-big'
+          style={calculatePortalStyles(this.props.portalSize)}
           size='lg'
           variant='dark'
           disabled
