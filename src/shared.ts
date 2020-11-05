@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '0.8.5';
+export const VERSION = '0.8.6';
 
 export enum PortalFormType {
   add = 0,
@@ -42,8 +42,8 @@ export const PORTALS = [
     'title': 'Web Portal'
   },
   {
-    'name': 'widget',
-    'title': 'Widget'
+    'name': 'folder',
+    'title': 'Folder'
   }
 ];
 
