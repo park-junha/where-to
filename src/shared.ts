@@ -42,8 +42,8 @@ export const PORTALS = [
     'title': 'Web Portal'
   },
   {
-    'name': 'widget',
-    'title': 'Widget'
+    'name': 'folder',
+    'title': 'Folder'
   }
 ];
 
