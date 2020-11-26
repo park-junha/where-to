@@ -3,9 +3,7 @@
 [![Chrome](https://img.shields.io/endpoint?url=https%3A%2F%2Fo3x72k5hu9.execute-api.us-west-1.amazonaws.com%2Fapi%2Fchrome)](https://chrome.google.com/webstore/detail/where-to/kdhcodpjaffhbbphkahnkbllddjihima)
 [![Firefox](https://img.shields.io/endpoint?url=https%3A%2F%2Fo3x72k5hu9.execute-api.us-west-1.amazonaws.com%2Fapi%2Ffirefox)](https://addons.mozilla.org/en-US/firefox/addon/where-to/)
 
-<p>
-  <img width="128" src="public/WhereTo128.png">
-</p>
+![WhereTo](public/img/WhereTo128.png)
 
 Where To is a web broswer extension that replaces your New Tab with a customizable, personalized interface.
 
@@ -15,7 +13,6 @@ The following technologies are used:
 - **Framework**: React
 - **Language**: TypeScript
 - **Stylesheets**: SCSS
-- **Testing**: Jest
 - **Package Manager**: Yarn
 
 ## Development Server
@@ -23,9 +20,11 @@ The following technologies are used:
 To run a development server, run the following:
 
 ```
-yarn add
+yarn install
 yarn start
 ```
+
+This app was developed with `node v14.4.0` and `yarn 1.22.4`.
 
 ## Install Locally
 
