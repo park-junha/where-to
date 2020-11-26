@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "0.8.6",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
@@ -65,6 +65,7 @@
     "semver": "7.3.2",
     "style-loader": "1.2.1",
     "terser-webpack-plugin": "4.1.0",
+    "three": "^0.123.0",
     "ts-pnp": "1.2.0",
     "typescript": "~3.9.7",
     "url-loader": "4.1.0",
