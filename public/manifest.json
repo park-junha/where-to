@@ -1,12 +1,19 @@
 {
   "short_name": "Where To",
   "name": "Where To",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "Customizable New Tab Extension",
   "permissions": [],
   "chrome_url_overrides": {
     "newtab": "index.html"
+  },
+  "icons": {
+    "32": "img/WhereTo32.png",
+    "48": "img/WhereTo48.png",
+    "64": "img/WhereTo64.png",
+    "96": "img/WhereTo96.png",
+    "128": "img/WhereTo128.png"
   },
   "start_url": ".",
   "display": "standalone",
