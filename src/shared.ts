@@ -36,10 +36,10 @@ export interface NewPortalForm {
 
 export const MAX_PORTALS = 30;
 
-export const PORTALS = [
+export const PORTAL_TYPES = [
   {
-    'name': 'webportal',
-    'title': 'Web Portal'
+    'name': 'shortcut',
+    'title': 'Shortcut'
   },
   {
     'name': 'folder',
@@ -50,25 +50,25 @@ export const PORTALS = [
 export const DEFAULT_PORTALS = [
   {
     id: v4(),
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Facebook',
     url: 'https://www.facebook.com'
   },
   {
     id: v4(),
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Amazon',
     url: 'https://www.amazon.com'
   },
   {
     id: v4(),
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Netflix',
     url: 'https://www.netflix.com'
   },
   {
     id: v4(),
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Google',
     url: 'https://www.google.com'
   }

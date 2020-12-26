@@ -7,13 +7,13 @@ import App from '../../App';
 const testContent = [
   {
     title: 'GitHub',
-    type: 'webportal',
+    type: 'shortcut',
     url: 'https://github.com/park-junha',
     id: '5afa9b63-2268-465f-8f8f-513030d50730'
   },
   {
     title: 'Spekkio',
-    type: 'webportal',
+    type: 'shortcut',
     url: 'https://github.com/spekkio-bot/spekkio',
     id: '0ff6095f-1de1-4e81-9053-96827d9029f0'
   }
@@ -38,7 +38,7 @@ it('renders header', () => {
   expect(h1).toBeInTheDocument();
 });
 
-it('renders web portal buttons', () => {
+it('renders shortcut buttons', () => {
   const props = {
     contents: testContent,
     switchComponent: App.switchComponent

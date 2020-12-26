@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, ButtonGroup } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { NewPortalForm, PORTALS } from '../../shared';
+import { NewPortalForm, PORTAL_TYPES } from '../../shared';
 import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
-import WebPortalOptions from '../WebPortalOptions/WebPortalOptions';
+import ShortcutOptions from '../ShortcutOptions/ShortcutOptions';
 
 interface Props {
   showModal: boolean;
@@ -20,14 +20,14 @@ interface State {
 
 export default class ItemModal extends Component<Props, State> {
   state: State = {
-    portalType: PORTALS[0].name ?? 'N/A'
+    portalType: PORTAL_TYPES[0].name ?? 'N/A'
   };
 
   renderOptions = (): JSX.Element => {
     switch (this.state.portalType) {
-    case 'webportal':
+    case 'shortcut':
       return (
-        <WebPortalOptions
+        <ShortcutOptions
           submitForm={this.props.submitForm}
           hideModal={this.props.hideModal}
           submitLabel={this.submitLabel()}
@@ -117,7 +117,7 @@ export default class ItemModal extends Component<Props, State> {
             toggle
           >
             {/* TODO: replace 'any' below with proper type */}
-            {PORTALS.map((portal, i) => (
+            {PORTAL_TYPES.map((portal, i) => (
               <ToggleButton
                 key={i}
                 type='radio'

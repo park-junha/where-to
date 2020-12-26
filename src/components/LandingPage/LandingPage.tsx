@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 
-import WebPortal from '../WebPortal/WebPortal';
+import Shortcut from '../Shortcut/Shortcut';
 import { LandingPageItems, LandingPageItem } from '../../shared';
 
 interface Props {
@@ -13,9 +13,10 @@ interface Props {
 export default class LandingPage extends Component<Props> {
   renderItem = (item: LandingPageItem): JSX.Element => {
     switch (item.type) {
-    case 'webportal':
+    case 'shortcut':
+    case 'webportal': // For backwards compatibility
       return (
-        <WebPortal
+        <Shortcut
           key={item.id}
           item={item}
           switchComponent={this.props.switchComponent}

@@ -15,7 +15,7 @@ interface State {
   submitError: string;
 }
 
-export default class WebPortalOptions extends Component<Props, State> {
+export default class ShortcutOptions extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +29,7 @@ export default class WebPortalOptions extends Component<Props, State> {
 
   componentDidMount(): void {
     if (this.props.initialFormValues &&
-        this.props.initialFormValues.type === 'webportal') {
+        this.props.initialFormValues.type === 'shortcut') {
       this.setState((prevState, prevProps) => ({
         //  TODO: find a better way to handle potential undefined props?
         title: prevProps?.initialFormValues?.title ?? '',
@@ -58,7 +58,7 @@ export default class WebPortalOptions extends Component<Props, State> {
   submitForm = (): void => {
     this.props.submitForm({
       title: this.state.title,
-      type: 'webportal',
+      type: 'shortcut',
       url: this.state.url
     })
     .then(() => {
@@ -76,7 +76,7 @@ export default class WebPortalOptions extends Component<Props, State> {
   render (): JSX.Element {
     return (
       <div>
-        <h5>Configure Web Portal</h5>
+        <h5>Configure Shortcut</h5>
         <Form>
           <Form.Group controlId='formPortalTitle'>
             <Form.Label>Name</Form.Label>

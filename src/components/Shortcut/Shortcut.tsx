@@ -7,7 +7,7 @@ interface Props {
   switchComponent: (newComponent: string) => void;
 }
 
-export default class WebPortal extends Component<Props> {
+export default class Shortcut extends Component<Props> {
   render (): JSX.Element {
     return (
       <a

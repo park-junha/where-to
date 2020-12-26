@@ -16,7 +16,8 @@ export default class SortablePortal extends Component<Props> {
       + 's';
 
     switch (this.props.item.type) {
-    case 'webportal':
+    case 'shortcut':
+    case 'webportal': // For backwards compatibility
       return (
         <span
           key={this.props.item.id}
