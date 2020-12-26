@@ -56,9 +56,9 @@ export default class ItemModal extends Component<Props, State> {
         return <h4>Add New Portal</h4>;
       case 'edit':
         return <h4>Edit Portal</h4>;
-      //  should never get to this point
+      // Should never get to this point
       default:
-        return <h4>Portal Modal</h4>;
+        throw new Error('this.props.mode has an invalid value');
     }
   };
 
