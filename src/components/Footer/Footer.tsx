@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, Button } from 'react-bootstrap';
-import { FiEdit, FiPlus } from 'react-icons/fi';
+import { FiEdit, FiPlus, FiSettings } from 'react-icons/fi';
 import { FcCancel } from 'react-icons/fc';
-import { GrPowerReset } from 'react-icons/gr';
 import { VERSION } from '../../shared';
 
 interface Props {
   currentComponent: string;
   showItemModal: () => void;
-  showResetModal: () => void;
+  showSettingsModal: () => void;
   switchComponent: (newComponent: string) => void;
 }
 
@@ -70,13 +69,9 @@ export default class Footer extends Component<Props, {}> {
                 variant='dark'
                 className='footer-button'
                 data-testid='footer-button-reset'
-                onClick={() => this.props.showResetModal()}
+                onClick={() => this.props.showSettingsModal()}
               >
-                <GrPowerReset
-                  style={{
-                    filter: 'invert(100%)'
-                  }}
-                />
+                <FiSettings />
               </Button>
             </Nav.Item>
           </Nav>

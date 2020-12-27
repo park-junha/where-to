@@ -8,15 +8,16 @@ import LoadingPage from './components/LoadingPage/LoadingPage';
 import Footer from './components/Footer/Footer';
 import LandingPage from './components/LandingPage/LandingPage';
 import EditPortals from './components/EditPortals/EditPortals';
-import ResetModal from './components/ResetModal/ResetModal';
 import ItemModal from './components/ItemModal/ItemModal';
+import SettingsModal from './components/SettingsModal/SettingsModal';
 import {
   AppContents,
   LandingPageItems,
   NewPortalForm,
   PortalFormType,
+  Settings,
   DEFAULT_PORTALS,
-  MAX_PORTALS
+  DEFAULT_SETTINGS
 } from './shared';
 
 import smoke from './img/smoke.png';
@@ -25,8 +26,7 @@ interface State {
   component: string;
   contents: AppContents;
   showItemModal: boolean;
-  showResetModal: boolean;
-  maxPortals: number;
+  showSettingsModal: boolean;
 }
 
 interface App {
@@ -37,26 +37,25 @@ const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 const loadContents = (): AppContents => {
   let storedContents = localStorage.getItem('contentsMain');
+  let storedSettings = localStorage.getItem('settings');
   let main = [];
+  let settings: any = {};
   if (storedContents === null) {
     main = setDefaultContents();
     localStorage.setItem('contentsMain', JSON.stringify(main));
   } else {
     main = JSON.parse(storedContents ?? '[]');
   }
-  return {
-    'main': main,
-    'footer': []
-  }
-};
-
-const loadMaxPortals = (): number => {
-  let storedMaxPortals = localStorage.getItem('maxPortals');
-  if (storedMaxPortals === null) {
-    localStorage.setItem('maxPortals', MAX_PORTALS.toString());
-    return MAX_PORTALS;
+  if (storedSettings === null) {
+    settings = Object.assign({}, setDefaultSettings());
+    localStorage.setItem('settings', JSON.stringify(settings));
   } else {
-    return parseInt(storedMaxPortals);
+    settings = Object.assign({}, JSON.parse(storedSettings ?? '[]'));
+  }
+  return {
+    main: main,
+    settings: settings,
+    footer: [] // TODO: Is this even used? Remove if not
   }
 };
 
@@ -64,13 +63,16 @@ const setDefaultContents = (): LandingPageItems => {
   return DEFAULT_PORTALS ?? [];
 };
 
+const setDefaultSettings = (): Settings => {
+  return DEFAULT_SETTINGS ?? [];
+};
+
 class App extends Component<{}, State> {
   state: State = {
     component: 'LandingPage',
     contents: loadContents(),
-    maxPortals: loadMaxPortals(),
     showItemModal: false,
-    showResetModal: false
+    showSettingsModal: false
   };
 
   componentDidMount(): void {
@@ -167,6 +169,7 @@ class App extends Component<{}, State> {
       return (
         <LandingPage
           nofade={true}
+          portalSize={this.state.contents.settings.portalSize}
           contents={this.state.contents.main}
           switchComponent={this.switchComponent}
         />
@@ -174,6 +177,7 @@ class App extends Component<{}, State> {
     case 'LandingPage':
       return (
         <LandingPage
+          portalSize={this.state.contents.settings.portalSize}
           contents={this.state.contents.main}
           switchComponent={this.switchComponent}
         />
@@ -184,6 +188,7 @@ class App extends Component<{}, State> {
           contents={this.state.contents.main}
           editPortals={this.editPortals}
           editPortal={this.editPortal}
+          portalSize={this.state.contents.settings.portalSize}
           removePortal={this.removePortal}
           validatePortalForm={this.validatePortalForm}
         />
@@ -211,15 +216,17 @@ class App extends Component<{}, State> {
     });
   };
 
-  showResetModal = (): void => {
+  showSettingsModal = (): void => {
     this.setState({
-      showResetModal: true
+      showSettingsModal: true
     });
   }
 
-  hideResetModal = (): void => {
+  hideSettingsModal = (): void => {
+    localStorage.setItem('settings',
+      JSON.stringify(this.state.contents.settings));
     this.setState({
-      showResetModal: false
+      showSettingsModal: false
     });
   };
 
@@ -244,7 +251,8 @@ class App extends Component<{}, State> {
         reject('ERROR: Please enter a URL.');
       }
       if (formType === PortalFormType.add &&
-        (this.state.contents.main.length >= this.state.maxPortals)) {
+        (this.state.contents.main.length >=
+          this.state.contents.settings.maxPortals)) {
         reject('ERROR: Maximum number of portals reached.');
       }
       if (!isUri(portal.url)) {
@@ -324,13 +332,27 @@ class App extends Component<{}, State> {
     }), this.saveCurrentState);
   };
 
+  updatePortalSize = (newPortalSize: number): void => {
+    this.setState(prevState => ({
+      ...prevState,
+      contents: {
+        ...prevState.contents,
+        settings: {
+          ...prevState.contents.settings,
+          portalSize: newPortalSize
+        }
+      }
+    }), this.saveCurrentState);
+  };
+
   resetPortals = (): void => {
     localStorage.removeItem('contentsMain');
+    localStorage.removeItem('settings');
     this.setState({
       contents: loadContents(),
       component: 'LandingPageNoFade'
     });
-    this.hideResetModal();
+    this.hideSettingsModal();
   };
 
   public render (): JSX.Element {
@@ -353,7 +375,7 @@ class App extends Component<{}, State> {
         <Footer
           currentComponent={this.state.component}
           showItemModal={this.showItemModal}
-          showResetModal={this.showResetModal}
+          showSettingsModal={this.showSettingsModal}
           switchComponent={this.switchComponent}
         />
         <ItemModal
@@ -363,9 +385,11 @@ class App extends Component<{}, State> {
           submitForm={this.createPortal}
           mode='create'
         />
-        <ResetModal
-          showModal={this.state.showResetModal}
-          hideModal={this.hideResetModal}
+        <SettingsModal
+          showModal={this.state.showSettingsModal}
+          hideModal={this.hideSettingsModal}
+          portalSize={this.state.contents.settings.portalSize}
+          updatePortalSize={this.updatePortalSize}
           resetPortals={this.resetPortals}
         />
       </div>

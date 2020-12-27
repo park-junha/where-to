@@ -8,7 +8,7 @@ it('should throw correct error on portal form with missing title',
   async function() {
   let app: App = new App();
   const portalForm = {
-    type: 'webportal',
+    type: 'shortcut',
     title: '',
     url: 'https://google.com'
   };
@@ -24,7 +24,7 @@ it('should throw correct error on portal form with missing URL',
   async function() {
   let app: App = new App();
   const portalForm = {
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Google',
     url: ''
   };
@@ -42,20 +42,20 @@ it('should throw correct error when app has too many portals',
   app.state.contents.main = [
     {
       id: '1',
-      type: 'webportal',
+      type: 'shortcut',
       title: 'GitHub',
       url: 'https://github.com'
     },
     {
       id: '2',
-      type: 'webportal',
+      type: 'shortcut',
       title: 'LinkedIn',
       url: 'https://linkedin.com'
     }
   ];
-  app.state.maxPortals = 2;
+  app.state.contents.settings.maxPortals = 2;
   const portalForm = {
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Google',
     url: 'https://google.com'
   };
@@ -71,7 +71,7 @@ it('should throw correct error on portal form with invalid URL',
   async function() {
   let app: App = new App();
   const portalForm = {
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Google',
     url: 'definitelyNotAValidURL'
   };
@@ -87,7 +87,7 @@ it('should not throw error on valid portal form',
   async function() {
   let app: App = new App();
   const portalForm = {
-    type: 'webportal',
+    type: 'shortcut',
     title: 'Google',
     url: 'https://google.com'
   };
