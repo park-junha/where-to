@@ -3,24 +3,28 @@ import { v4 } from 'uuid';
 import { isUri } from 'valid-url';
 import * as THREE from 'three';
 
-import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-import LoadingPage from './components/LoadingPage/LoadingPage';
-import Footer from './components/Footer/Footer';
-import LandingPage from './components/LandingPage/LandingPage';
-import EditPortals from './components/EditPortals/EditPortals';
-import ItemModal from './components/ItemModal/ItemModal';
-import SettingsModal from './components/SettingsModal/SettingsModal';
 import {
   AppContents,
   LandingPageItems,
   NewPortalForm,
-  PortalFormType,
-  Settings,
+  Settings
+} from '../../models/interfaces';
+import {
+  PortalFormType
+} from '../../models/enums';
+import {
   DEFAULT_PORTALS,
   DEFAULT_SETTINGS
-} from './shared';
+} from '../../models/constants';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import LoadingPage from '../LoadingPage/LoadingPage';
+import Footer from '../Footer/Footer';
+import LandingPage from '../LandingPage/LandingPage';
+import EditPortals from '../EditPortals/EditPortals';
+import ItemModal from '../ItemModal/ItemModal';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
-import smoke from './img/smoke.png';
+import smoke from '../../img/smoke.png';
 
 interface State {
   component: string;
@@ -33,7 +37,7 @@ interface App {
   mount?: any;
 }
 
-const NotFound = lazy(() => import('./components/NotFound/NotFound'));
+const NotFound = lazy(() => import('../NotFound/NotFound'));
 
 const loadContents = (): AppContents => {
   let storedContents = localStorage.getItem('contentsMain');
@@ -56,7 +60,7 @@ const loadContents = (): AppContents => {
     main: main,
     settings: settings,
     footer: [] // TODO: Is this even used? Remove if not
-  }
+  };
 };
 
 const setDefaultContents = (): LandingPageItems => {

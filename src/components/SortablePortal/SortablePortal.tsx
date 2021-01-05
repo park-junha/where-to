@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { LandingPageItem, calculatePortalStyles } from '../../shared';
+
+import { LandingPageItem } from '../../models/interfaces';
+import { calculatePortalStyles } from '../../lib/utils';
 
 interface Props {
   item: LandingPageItem;

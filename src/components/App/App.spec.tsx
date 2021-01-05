@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import App, { validatePortalForm } from './App';
-import { PortalFormType } from './shared';
+import { PortalFormType } from '../../models/enums';
 
 it('should throw correct error on portal form with missing title',
   async function() {

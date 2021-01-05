@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, ButtonGroup } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { NewPortalForm, PORTAL_TYPES } from '../../shared';
+
+import { NewPortalForm } from '../../models/interfaces';
+import { PORTAL_TYPES } from '../../models/constants';
 import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
 import ShortcutOptions from '../ShortcutOptions/ShortcutOptions';
 

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 
-import Shortcut from '../Shortcut/Shortcut';
 import {
   LandingPageItems,
-  LandingPageItem,
+  LandingPageItem
+} from '../../models/interfaces';
+import {
   calculatePortalStyles
-} from '../../shared';
+} from '../../lib/utils';
+import Shortcut from '../Shortcut/Shortcut';
 
 interface Props {
   nofade?: boolean;

@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import Footer from './Footer';
-import App from '../../App';
+import App from '../components/App';
 
 it('renders correct button icons on landing page', () => {
   const props = {

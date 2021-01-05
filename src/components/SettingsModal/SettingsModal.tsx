@@ -3,7 +3,7 @@ import { Modal, ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 import ConfirmReset from '../ConfirmReset/ConfirmReset';
 import GeneralSettingsTab from '../GeneralSettingsTab/GeneralSettingsTab';
-import { SETTINGS_TABS } from '../../shared';
+import { SETTINGS_TABS } from '../../models/constants';
 
 interface Props {
   showModal: boolean;

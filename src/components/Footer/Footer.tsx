@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Nav, Navbar, Button } from 'react-bootstrap';
 import { FiEdit, FiPlus, FiSettings } from 'react-icons/fi';
 import { FcCancel } from 'react-icons/fc';
-import { VERSION } from '../../shared';
+import { VERSION } from '../../models/constants';
 
 interface Props {
   currentComponent: string;

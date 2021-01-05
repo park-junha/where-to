@@ -5,7 +5,7 @@ import 'rc-slider/assets/index.css';
 import {
   ABSOLUTE_PORTAL_MIN_SIZE,
   ABSOLUTE_PORTAL_MAX_SIZE
-} from '../../shared';
+} from '../../models/constants';
 
 const wrapperStyle = { margin: 20 };
 

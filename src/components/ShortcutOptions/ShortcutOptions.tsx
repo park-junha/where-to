@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
-import { NewPortalForm } from '../../shared';
+import { NewPortalForm } from '../../models/interfaces';
 
 interface Props {
   submitForm: (portal: NewPortalForm) => Promise<string>;

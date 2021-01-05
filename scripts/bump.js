@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const packageJsonPath = path.join(__dirname, '../package.json');
 const manifestJsonPath = path.join(__dirname, '../public/manifest.json');
-const sharedConstsPath = path.join(__dirname, '../src/shared.ts');
+const sharedConstsPath = path.join(__dirname, '../src/models/constants.ts');
 const packageJson = require('../package.json');
 const manifestJson = require('../public/manifest.json');
 

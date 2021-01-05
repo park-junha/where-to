@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ReactSortable } from 'react-sortablejs';
+
 import {
   LandingPageItems,
-  NewPortalForm,
+  NewPortalForm
+} from '../../models/interfaces';
+import {
   PortalFormType
-} from '../../shared';
+} from '../../models/enums';
 import SortablePortal from '../SortablePortal/SortablePortal';
 import ItemModal from '../ItemModal/ItemModal';
 
