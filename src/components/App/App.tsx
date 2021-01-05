@@ -227,11 +227,9 @@ class App extends Component<{}, State> {
   }
 
   hideSettingsModal = (): void => {
-    localStorage.setItem('settings',
-      JSON.stringify(this.state.contents.settings));
     this.setState({
       showSettingsModal: false
-    });
+    }, this.saveCurrentState);
   };
 
   switchComponent = (newComponent: string): void => {
@@ -243,6 +241,8 @@ class App extends Component<{}, State> {
   saveCurrentState = (): void => {
     localStorage.setItem('contentsMain',
       JSON.stringify(this.state.contents.main));
+    localStorage.setItem('settings',
+      JSON.stringify(this.state.contents.settings));
   };
 
   validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
@@ -355,7 +355,7 @@ class App extends Component<{}, State> {
     this.setState({
       contents: loadContents(),
       component: 'LandingPageNoFade'
-    });
+    }, this.saveCurrentState);
     this.hideSettingsModal();
   };
 
