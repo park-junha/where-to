@@ -3,6 +3,8 @@ import { Modal, ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 import ConfirmReset from '../ConfirmReset/ConfirmReset';
 import GeneralSettingsTab from '../GeneralSettingsTab/GeneralSettingsTab';
+import TransferTab from '../TransferTab/TransferTab';
+import LoadTab from '../LoadTab/LoadTab';
 import { SETTINGS_TABS } from '../../models/constants';
 
 interface Props {
@@ -10,6 +12,7 @@ interface Props {
   hideModal: () => void;
   portalSize: number;
   updatePortalSize: (newPortalSize: number) => void;
+  loadContents: () => void;
   resetPortals: () => void;
 }
 
@@ -30,6 +33,15 @@ export default class SettingsModal extends Component<Props, State> {
           portalSize={this.props.portalSize}
           updatePortalSize={this.props.updatePortalSize}
         />
+      );
+    case 'transfer':
+      return <TransferTab/>;
+    case 'load':
+      return (
+        <LoadTab
+          loadContents={this.props.loadContents}
+        >
+        </LoadTab>
       );
     case 'reset':
       return (

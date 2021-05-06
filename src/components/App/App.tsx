@@ -122,6 +122,7 @@ class App extends Component<{}, State> {
       let cloudGeo = new THREE.PlaneBufferGeometry(500, 500);
       let cloudMaterial = new THREE.MeshLambertMaterial({
         map: texture,
+        opacity: 0.55,
         transparent: true
       });
       for(let p = 0; p < 19; p++) {
@@ -134,7 +135,6 @@ class App extends Component<{}, State> {
         cloud.rotation.x = 1.16;
         cloud.rotation.y = -0.12;
         cloud.rotation.z = Math.random() * 2 * Math.PI;
-        cloud.material.opacity = 0.55;
         cloudParticles.push(cloud);
         scene.add(cloud);
       }
@@ -359,6 +359,14 @@ class App extends Component<{}, State> {
     this.hideSettingsModal();
   };
 
+  loadContents = (): void => {
+    this.setState({
+      contents: loadContents(),
+      component: 'LandingPageNoFade'
+    }, this.saveCurrentState);
+    this.hideSettingsModal();
+  };
+
   public render (): JSX.Element {
     return (
       <div className='App'>
@@ -392,6 +400,7 @@ class App extends Component<{}, State> {
         <SettingsModal
           showModal={this.state.showSettingsModal}
           hideModal={this.hideSettingsModal}
+          loadContents={this.loadContents}
           portalSize={this.state.contents.settings.portalSize}
           updatePortalSize={this.updatePortalSize}
           resetPortals={this.resetPortals}

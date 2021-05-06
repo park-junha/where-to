@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '1.1.4';
+export const VERSION = '1.2.0';
 
 export const MAX_PORTALS = 30;
 
@@ -55,6 +55,14 @@ export const SETTINGS_TABS = [
   {
     name: 'general',
     title: 'General'
+  },
+  {
+    name: 'transfer',
+    title: 'Transfer'
+  },
+  {
+    name: 'load',
+    title: 'Load'
   },
   {
     name: 'reset',
