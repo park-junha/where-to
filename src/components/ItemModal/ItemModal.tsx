@@ -69,7 +69,7 @@ export default class ItemModal extends Component<Props, State> {
       case 'create':
         return 'Create';
       case 'edit':
-        return 'Edit';
+        return 'Save';
       //  should never get to this point
       default:
         return 'Submit';

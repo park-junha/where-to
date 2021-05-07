@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '1.2.0';
+export const VERSION = '1.2.1';
 
 export const MAX_PORTALS = 30;
 

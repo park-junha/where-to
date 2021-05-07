@@ -28,10 +28,9 @@ export default class ShortcutOptions extends Component<Props, State> {
   };
 
   componentDidMount(): void {
-    if (this.props.initialFormValues &&
-        this.props.initialFormValues.type === 'shortcut') {
+    if (this.props.initialFormValues && ['shortcut', 'webportal'].includes(
+        this.props.initialFormValues.type)) {
       this.setState((prevState, prevProps) => ({
-        //  TODO: find a better way to handle potential undefined props?
         title: prevProps?.initialFormValues?.title ?? '',
         url: prevProps?.initialFormValues?.url ?? ''
       }));
@@ -49,9 +48,6 @@ export default class ShortcutOptions extends Component<Props, State> {
       *
       * see also:
       * https://stackoverflow.com/questions/46361905/property-is-missing-in-type-x-string-string
-      *
-      * TODO:
-      * Find a better workaround if possible
       */
   };
 
@@ -83,6 +79,7 @@ export default class ShortcutOptions extends Component<Props, State> {
             <Form.Control
               placeholder='Enter name'
               name='title'
+              data-testid='title'
               value={this.state.title}
               onChange={this.handleChange}
             />
@@ -92,6 +89,7 @@ export default class ShortcutOptions extends Component<Props, State> {
             <Form.Control
               placeholder='Enter URL of portal destination'
               name='url'
+              data-testid='url'
               value={this.state.url}
               onChange={this.handleChange}
             />
