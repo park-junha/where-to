@@ -45,12 +45,14 @@ let newVersion = newVersionArr.join('.');
 packageJson.version = newVersion;
 manifestJson.version = newVersion;
 
-fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), (err) => {
+fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n',
+  (err) => {
   if (err) return console.error(err);
   console.log(`Bumped package.json to ${newVersion}.`);
 });
 
-fs.writeFile(manifestJsonPath, JSON.stringify(manifestJson, null, 2), (err) => {
+fs.writeFile(manifestJsonPath, JSON.stringify(manifestJson, null, 2),
+  (err) => {
   if (err) return console.error(err);
   console.log(`Bumped manifest.json to ${newVersion}.`);
 });
