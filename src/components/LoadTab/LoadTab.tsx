@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormControl, Button } from 'react-bootstrap';
+import runMigration from '../../utils/runMigration';
 
 interface Props {
   loadContents: () => void;
@@ -35,6 +36,7 @@ export default class LoadTab extends Component<Props, State> {
 
   submitForm = (): void => {
     localStorage.setItem('contentsMain', this.state.contentsToLoad);
+    runMigration();
     this.props.loadContents();
   };
 

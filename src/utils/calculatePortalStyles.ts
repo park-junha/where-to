@@ -3,7 +3,7 @@ import {
   ABSOLUTE_PORTAL_MAX_SIZE
 } from '../models/constants';
 
-export function calculatePortalStyles(size: number): object {
+export default function calculatePortalStyles(size: number): object {
   function validatePortalCalcInput(size: number): void {
     if (size < ABSOLUTE_PORTAL_MIN_SIZE ||
       size > ABSOLUTE_PORTAL_MAX_SIZE) {

@@ -6,16 +6,12 @@ import * as THREE from 'three';
 import {
   AppContents,
   LandingPageItems,
-  NewPortalForm,
-  Settings
+  NewPortalForm
 } from '../../models/interfaces';
 import {
   PortalFormType
 } from '../../models/enums';
-import {
-  DEFAULT_PORTALS,
-  DEFAULT_SETTINGS
-} from '../../models/constants';
+import loadContents from '../../utils/loadContents';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import Footer from '../Footer/Footer';
@@ -38,38 +34,6 @@ interface App {
 }
 
 const NotFound = lazy(() => import('../NotFound/NotFound'));
-
-const loadContents = (): AppContents => {
-  let storedContents = localStorage.getItem('contentsMain');
-  let storedSettings = localStorage.getItem('settings');
-  let main = [];
-  let settings: any = {};
-  if (storedContents === null) {
-    main = setDefaultContents();
-    localStorage.setItem('contentsMain', JSON.stringify(main));
-  } else {
-    main = JSON.parse(storedContents ?? '[]');
-  }
-  if (storedSettings === null) {
-    settings = Object.assign({}, setDefaultSettings());
-    localStorage.setItem('settings', JSON.stringify(settings));
-  } else {
-    settings = Object.assign({}, JSON.parse(storedSettings ?? '[]'));
-  }
-  return {
-    main: main,
-    settings: settings,
-    footer: [] // TODO: Is this even used? Remove if not
-  };
-};
-
-const setDefaultContents = (): LandingPageItems => {
-  return DEFAULT_PORTALS ?? [];
-};
-
-const setDefaultSettings = (): Settings => {
-  return DEFAULT_SETTINGS ?? [];
-};
 
 class App extends Component<{}, State> {
   state: State = {

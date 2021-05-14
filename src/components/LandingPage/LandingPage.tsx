@@ -5,9 +5,7 @@ import {
   LandingPageItems,
   LandingPageItem
 } from '../../models/interfaces';
-import {
-  calculatePortalStyles
-} from '../../lib/utils';
+import calculatePortalStyles from '../../utils/calculatePortalStyles';
 import Shortcut from '../Shortcut/Shortcut';
 
 interface Props {

@@ -1,7 +1,7 @@
 export interface AppContents {
   main: LandingPageItems;
   settings: Settings;
-  footer: FooterLayout;
+  footer?: FooterLayout; // footer is Deprecated
 };
 
 export interface LandingPageItems extends Array<LandingPageItem>{};
@@ -18,15 +18,17 @@ export interface Settings {
   portalSize: number;
 };
 
-export interface FooterLayout extends Array<FooterItem>{};
-
-export interface FooterItem {
-  id: string;
-  title: string;
-};
-
 export interface NewPortalForm {
   type: string;
   title: string;
   url: string;
+};
+
+// FooterLayout is deprecated
+export interface FooterLayout extends Array<FooterItem>{};
+
+// FooterItem is deprecated
+export interface FooterItem {
+  id: string;
+  title: string;
 };

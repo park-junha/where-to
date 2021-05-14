@@ -1,6 +1,6 @@
 {
   "name": "where-to",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.11.1",
@@ -104,11 +104,14 @@
     "roots": [
       "<rootDir>/src"
     ],
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
+    "resetMocks": false,
     "setupFiles": [
+      "jest-localstorage-mock",
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [],
@@ -154,6 +157,7 @@
     ]
   },
   "devDependencies": {
+    "jest-localstorage-mock": "^2.4.12",
     "webpack-dev-server": "3.11.1"
   }
 }
