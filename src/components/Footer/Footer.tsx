@@ -68,7 +68,7 @@ export default class Footer extends Component<Props, {}> {
               <Button
                 variant='dark'
                 className='footer-button'
-                data-testid='footer-button-reset'
+                data-testid='footer-button-settings'
                 onClick={() => this.props.showSettingsModal()}
               >
                 <FiSettings />
