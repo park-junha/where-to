@@ -7,7 +7,6 @@ import calculatePortalStyles from '../../utils/calculatePortalStyles';
 interface Props {
   item: LandingPageItem;
   size: number;
-  confirmRemove: (id: string) => void;
   openEditModal: (id: string) => void;
   removePortal: (id: string) => void;
 }
