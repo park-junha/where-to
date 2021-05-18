@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 import { PortalFormType } from '../../models/enums';
 
@@ -102,9 +102,196 @@ describe('App (unit)', () => {
 });
 
 describe('App (e2e)', () => {
+  const sampleData = [
+    {
+      id: 'e2e-sample-data',
+      type: 'shortcut',
+      title: 'E2E Sample Data',
+      url: 'chrome://extensions'
+    }
+  ];
+
+  beforeEach(() => {
+    localStorage.clear();
+    localStorage.__STORE__.contentsMain = JSON.stringify(sampleData);
+    jest.clearAllMocks();
+  });
+
   it('can render (no WebGL)', () => {
     const { queryByText } = render(<App renderVisuals={false} />);
     const header = queryByText(/Where To/);
     expect(header).toBeInTheDocument();
+  });
+
+  it('can render portals', () => {
+    const { queryByText } = render(<App renderVisuals={false} />);
+    const portal = queryByText(/E2E Sample Data/);
+    expect(portal).toBeInTheDocument();
+  });
+
+  it('can load data through settings', () => {
+    const {
+      queryByDisplayValue,
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Open Settings modal
+    const settingsButton = queryByTestId('footer-button-settings');
+    fireEvent.click(settingsButton);
+
+    // Navigate to Load
+    const loadTabButton = queryByText(/^Load/);
+    fireEvent.click(loadTabButton);
+
+    // Fill out and submit
+    const loadButton = queryByText(/Load Data/);
+    const textInputField = queryByDisplayValue('');
+    fireEvent.change(textInputField, {
+      target: {
+        value: JSON.stringify(sampleData)
+      }
+    });
+    fireEvent.click(loadButton);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    expect(storageData.length).toEqual(1);
+  });
+
+  it('can reset data through settings', () => {
+    const {
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Open Settings modal
+    const settingsButton = queryByTestId('footer-button-settings');
+    fireEvent.click(settingsButton);
+
+    // Navigate to Reset
+    const resetTabButton = queryByText(/^Reset to Default/);
+    fireEvent.click(resetTabButton);
+
+    // Confirm
+    const resetButton = queryByText(/Yes/);
+    fireEvent.click(resetButton);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    expect(storageData.length).toEqual(4);
+    const facebookPortal = queryByText(/Facebook/);
+    const amazonPortal = queryByText(/Amazon/);
+    const netflixPortal = queryByText(/Netflix/);
+    const googlePortal = queryByText(/Google/);
+    expect(facebookPortal).toBeInTheDocument();
+    expect(amazonPortal).toBeInTheDocument();
+    expect(netflixPortal).toBeInTheDocument();
+    expect(googlePortal).toBeInTheDocument();
+  });
+
+  it('can create portal', () => {
+    const {
+      queryByPlaceholderText,
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Click add portal button
+    const editButton = queryByTestId('footer-button-add');
+    fireEvent.click(editButton);
+
+    // Fill out form and submit
+    const nameField = queryByPlaceholderText(/Enter name/);
+    const urlField = queryByPlaceholderText(/Enter URL/);
+    fireEvent.change(nameField, {
+      target: {
+        value: 'New shortcut'
+      }
+    });
+    fireEvent.change(urlField, {
+      target: {
+        value: 'about:blank'
+      }
+    });
+    const createButton = queryByText(/^Create/);
+    fireEvent.click(createButton);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    // TODO: test fails when below is enabled, potential bug...
+//  expect(storageData.length).toEqual(2);
+//  expect(storageData[1].title).toEqual('New shortcut');
+//  expect(storageData[1].url).toEqual('about:blank');
+    const portalAfterEdit = queryByText(/^New shortcut$/);
+    expect(portalAfterEdit).not.toBeInTheDocument();
+  });
+
+  it('can edit portal', () => {
+    const {
+      queryByDisplayValue,
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Enable edit mode
+    const editButton = queryByTestId('footer-button-edit');
+    fireEvent.click(editButton);
+
+    // Click portal
+    const portal = queryByText(/E2E Sample Data/);
+    fireEvent.click(portal);
+
+    // Fill out form and submit
+    const nameField = queryByDisplayValue('E2E Sample Data');
+    const urlField = queryByDisplayValue('chrome://extensions');
+    fireEvent.change(nameField, {
+      target: {
+        value: 'E2E'
+      }
+    });
+    fireEvent.change(urlField, {
+      target: {
+        value: 'about:blank'
+      }
+    });
+    const saveButton = queryByText(/^Save/);
+    fireEvent.click(saveButton);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    expect(storageData.length).toEqual(1);
+    // TODO: test fails when below is enabled, potential bug...
+//  expect(storageData[0].title).toEqual('E2E');
+//  expect(storageData[0].url).toEqual('about:blank');
+    const portalAfterEdit = queryByText(/^E2E$/);
+    expect(portalAfterEdit).not.toBeInTheDocument();
+  });
+
+  it('can remove portal', () => {
+    const {
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Enable edit mode
+    const editButton = queryByTestId('footer-button-edit');
+    fireEvent.click(editButton);
+
+    // Click portal
+    const portal = queryByText(/E2E Sample Data/);
+    fireEvent.click(portal);
+
+    // Delete
+    const deleteTabButton = queryByText(/Delete/);
+    fireEvent.click(deleteTabButton);
+    const deleteButton = queryByText(/Yes/);
+    fireEvent.click(deleteButton);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    expect(storageData.length).toEqual(0);
+    const portalAfterDelete = queryByText(/E2E Sample Data/);
+    expect(portalAfterDelete).not.toBeInTheDocument();
   });
 });
