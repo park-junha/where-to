@@ -107,6 +107,8 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
+      "!src/index.tsx",
+      "!src/utils/renderVisuals.ts",
       "!src/**/*.d.ts"
     ],
     "resetMocks": false,

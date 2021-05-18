@@ -6,7 +6,7 @@ import App from './components/App/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App renderVisuals={true} />
   </React.StrictMode>,
   document.getElementById('root')
 );
