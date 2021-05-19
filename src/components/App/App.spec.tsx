@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 import { PortalFormType } from '../../models/enums';
 
-describe('App (unit)', () => {
+describe('App (integration)', () => {
   it('should throw correct error on portal form with missing title',
     async function() {
     let app: App = new App();

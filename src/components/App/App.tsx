@@ -1,6 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { v4 } from 'uuid';
-import { isUri } from 'valid-url';
 
 import {
   AppContents,
@@ -9,6 +8,7 @@ import {
 } from '../../models/interfaces';
 import { PortalFormType } from '../../models/enums';
 import renderVisuals from '../../utils/renderVisuals';
+import validatePortal from '../../utils/validatePortal';
 
 import loadContents from '../../utils/loadContents';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
@@ -131,21 +131,17 @@ class App extends Component<Props, State> {
   validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
     Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      if (portal.title.length <= 0) {
-        reject('ERROR: Please enter a name.');
-      }
-      if (portal.url.length <= 0) {
-        reject('ERROR: Please enter a URL.');
-      }
-      if (formType === PortalFormType.add &&
-        (this.state.contents.main.length >=
-          this.state.contents.settings.maxPortals)) {
-        reject('ERROR: Maximum number of portals reached.');
-      }
-      if (!isUri(portal.url)) {
-        reject('ERROR: Invalid URL.')
-      }
-      resolve('');
+      validatePortal(portal).then(() => {
+        if (formType === PortalFormType.add &&
+          (this.state.contents.main.length >=
+            this.state.contents.settings.maxPortals)) {
+          reject('ERROR: Maximum number of portals reached.');
+        }
+        resolve('');
+      })
+      .catch((err) => {
+        reject(err);
+      });
     });
   };
 

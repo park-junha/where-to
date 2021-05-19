@@ -36,7 +36,24 @@ it('should handle changes on text input field', () => {
   expect(textInputField.value).toEqual('this should be here')
 });
 
-it('should call loadContents prop on submit', () => {
+it('should call loadContents prop on submit', async function() {
+  const {
+    queryByText,
+    queryByDisplayValue
+  } = render(<LoadTab {...props} />);
+  const button = queryByText(/Load Data/);
+  const textInputField = queryByDisplayValue('');
+  fireEvent.change(textInputField, {
+    target: {
+      value: '[{"title":"Valid","url":"about:blank"}]'
+    }
+  });
+  fireEvent.click(button);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  expect(props.loadContents).toHaveBeenCalled();
+});
+
+it('should not submit form and alert on invalid submit', async function() {
   const {
     queryByText,
     queryByDisplayValue
@@ -49,5 +66,25 @@ it('should call loadContents prop on submit', () => {
     }
   });
   fireEvent.click(button);
-  expect(props.loadContents).toHaveBeenCalled();
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const alertText = queryByText(/ERROR: Malformed data./);
+  expect(props.loadContents).not.toHaveBeenCalled();
+  expect(alertText).toBeInTheDocument();
+});
+
+it('should preserve input field text on invalid submit', async function() {
+  const {
+    queryByText,
+    queryByDisplayValue
+  } = render(<LoadTab {...props} />);
+  const button = queryByText(/Load Data/);
+  const textInputField = queryByDisplayValue('');
+  fireEvent.change(textInputField, {
+    target: {
+      value: '[{"url": "about:blank"}]'
+    }
+  });
+  fireEvent.click(button);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  expect(textInputField.value).toEqual('[{"url": "about:blank"}]');
 });
