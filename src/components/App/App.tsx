@@ -1,21 +1,16 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { v4 } from 'uuid';
-import { isUri } from 'valid-url';
-import * as THREE from 'three';
 
 import {
   AppContents,
   LandingPageItems,
-  NewPortalForm,
-  Settings
+  NewPortalForm
 } from '../../models/interfaces';
-import {
-  PortalFormType
-} from '../../models/enums';
-import {
-  DEFAULT_PORTALS,
-  DEFAULT_SETTINGS
-} from '../../models/constants';
+import { PortalFormType } from '../../models/enums';
+import renderVisuals from '../../utils/renderVisuals';
+import validatePortal from '../../utils/validatePortal';
+
+import loadContents from '../../utils/loadContents';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import Footer from '../Footer/Footer';
@@ -24,7 +19,9 @@ import EditPortals from '../EditPortals/EditPortals';
 import ItemModal from '../ItemModal/ItemModal';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
-import smoke from '../../img/smoke.png';
+interface Props {
+  renderVisuals?: boolean;
+}
 
 interface State {
   component: string;
@@ -39,39 +36,7 @@ interface App {
 
 const NotFound = lazy(() => import('../NotFound/NotFound'));
 
-const loadContents = (): AppContents => {
-  let storedContents = localStorage.getItem('contentsMain');
-  let storedSettings = localStorage.getItem('settings');
-  let main = [];
-  let settings: any = {};
-  if (storedContents === null) {
-    main = setDefaultContents();
-    localStorage.setItem('contentsMain', JSON.stringify(main));
-  } else {
-    main = JSON.parse(storedContents ?? '[]');
-  }
-  if (storedSettings === null) {
-    settings = Object.assign({}, setDefaultSettings());
-    localStorage.setItem('settings', JSON.stringify(settings));
-  } else {
-    settings = Object.assign({}, JSON.parse(storedSettings ?? '[]'));
-  }
-  return {
-    main: main,
-    settings: settings,
-    footer: [] // TODO: Is this even used? Remove if not
-  };
-};
-
-const setDefaultContents = (): LandingPageItems => {
-  return DEFAULT_PORTALS ?? [];
-};
-
-const setDefaultSettings = (): Settings => {
-  return DEFAULT_SETTINGS ?? [];
-};
-
-class App extends Component<{}, State> {
+class App extends Component<Props, State> {
   state: State = {
     component: 'LandingPage',
     contents: loadContents(),
@@ -80,92 +45,10 @@ class App extends Component<{}, State> {
   };
 
   componentDidMount(): void {
-    this.renderVisuals()
+    if (this.props.renderVisuals) {
+      renderVisuals(this.mount);
+    }
   }
-
-  //  TODO (park-junha): Can we make this more performant?
-  renderVisuals = (): void => {
-    let scene: THREE.Scene = new THREE.Scene();
-    let camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(60,
-      window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 1;
-    camera.rotation.x = 1.16;
-    camera.rotation.y = -0.12;
-    camera.rotation.z = 0.27;
-
-    let ambient: THREE.AmbientLight = new THREE.AmbientLight(0x555555);
-    scene.add(ambient);
-
-    let renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    let cloudParticles: THREE.Mesh[] = [];
-
-    scene.fog = new THREE.FogExp2(0x011014, 0.001);
-    renderer.setClearColor(scene.fog.color);
-
-    this.mount.appendChild(renderer.domElement);
-
-    //  Render the sick visuals
-    let renderScene = function () {
-      renderer.render(scene, camera);
-      requestAnimationFrame(renderScene);
-      cloudParticles.forEach(p => {
-        p.rotation.z -= 0.001;
-      });
-    };
-
-    let loader = new THREE.TextureLoader();
-
-    //  Load clouds
-    loader.load(smoke, function (texture) {
-      let cloudGeo = new THREE.PlaneBufferGeometry(500, 500);
-      let cloudMaterial = new THREE.MeshLambertMaterial({
-        map: texture,
-        opacity: 0.55,
-        transparent: true
-      });
-      for(let p = 0; p < 19; p++) {
-        let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
-        cloud.position.set(
-          Math.random() * 800 - 400
-          , 500
-          , Math.random() * 500 - 500
-        );
-        cloud.rotation.x = 1.16;
-        cloud.rotation.y = -0.12;
-        cloud.rotation.z = Math.random() * 2 * Math.PI;
-        cloudParticles.push(cloud);
-        scene.add(cloud);
-      }
-    });
-
-    //  Lights
-    let darkBlueLight: THREE.PointLight =
-      new THREE.PointLight(0x021024, 50, 450, 1.7);
-    let blueLight: THREE.PointLight =
-      new THREE.PointLight(0x0000cc, 50, 450, 1.7);
-    let lochmaraLight: THREE.PointLight =
-      new THREE.PointLight(0x3677ac, 50, 450, 1.7);
-
-    darkBlueLight.position.set(100, 300, 100);
-    blueLight.position.set(100, 300, 100);
-    lochmaraLight.position.set(300, 300, 200);
-
-    scene.add(darkBlueLight);
-    scene.add(blueLight);
-    scene.add(lochmaraLight);
-
-    //  Resize scene on window resize
-    let onWindowResize = function () {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-
-    renderScene();
-    window.addEventListener('resize', onWindowResize, false);
-  };
 
   renderComponent = (): JSX.Element => {
     switch(this.state.component) {
@@ -248,21 +131,17 @@ class App extends Component<{}, State> {
   validatePortalForm = (portal: NewPortalForm, formType: PortalFormType):
     Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      if (portal.title.length <= 0) {
-        reject('ERROR: Please enter a name.');
-      }
-      if (portal.url.length <= 0) {
-        reject('ERROR: Please enter a URL.');
-      }
-      if (formType === PortalFormType.add &&
-        (this.state.contents.main.length >=
-          this.state.contents.settings.maxPortals)) {
-        reject('ERROR: Maximum number of portals reached.');
-      }
-      if (!isUri(portal.url)) {
-        reject('ERROR: Invalid URL.')
-      }
-      resolve('');
+      validatePortal(portal).then(() => {
+        if (formType === PortalFormType.add &&
+          (this.state.contents.main.length >=
+            this.state.contents.settings.maxPortals)) {
+          reject('ERROR: Maximum number of portals reached.');
+        }
+        resolve('');
+      })
+      .catch((err) => {
+        reject(err);
+      });
     });
   };
 

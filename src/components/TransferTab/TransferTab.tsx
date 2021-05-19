@@ -15,9 +15,8 @@ export default class TransferTab extends Component {
             height: '16em'
           }}
           disabled
-        >
-          {localStorage.getItem('contentsMain')}
-        </FormControl>
+          defaultValue={localStorage.getItem('contentsMain') ?? ''}
+        />
       </>
     );
   };

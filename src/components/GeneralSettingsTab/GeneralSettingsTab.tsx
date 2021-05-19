@@ -28,7 +28,10 @@ export default class GeneralSettingsTab extends Component<Props, {}> {
     return (
       <>
         <h5>Button Size</h5>
-        <div style={wrapperStyle}>
+        <div
+          style={wrapperStyle}
+          data-testid='button-size-slider'
+        >
           <Slider
             min={ABSOLUTE_PORTAL_MIN_SIZE}
             max={ABSOLUTE_PORTAL_MAX_SIZE}

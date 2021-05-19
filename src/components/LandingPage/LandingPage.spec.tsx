@@ -31,6 +31,7 @@ const testInvalidContent = [
 it('renders header', () => {
   const props = {
     contents: testContent,
+    portalSize: 60,
     switchComponent: App.switchComponent
   };
   const { queryByText } = render(<LandingPage {...props} />);
@@ -41,6 +42,7 @@ it('renders header', () => {
 it('renders shortcut buttons', () => {
   const props = {
     contents: testContent,
+    portalSize: 60,
     switchComponent: App.switchComponent
   };
   const { queryByText } = render(<LandingPage {...props} />);
@@ -53,6 +55,7 @@ it('renders shortcut buttons', () => {
 it('renders N/A for invalid items', () => {
   const props = {
     contents: testInvalidContent,
+    portalSize: 60,
     switchComponent: App.switchComponent
   };
   const { queryByText } = render(<LandingPage {...props} />);

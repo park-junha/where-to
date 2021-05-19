@@ -54,12 +54,6 @@ export default class EditPortals extends Component<Props, State> {
     this.hideModal();
   };
 
-  confirmRemove = (id: string): void => {
-    this.setState({
-      idToEdit: id
-    });
-  };
-
   editPortal = (portal: NewPortalForm): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       this.props.validatePortalForm(portal, PortalFormType.edit)
@@ -105,7 +99,6 @@ export default class EditPortals extends Component<Props, State> {
                     <SortablePortal
                       item={item}
                       size={this.props.portalSize}
-                      confirmRemove={this.confirmRemove}
                       openEditModal={this.openEditModal}
                       removePortal={this.props.removePortal}
                     />

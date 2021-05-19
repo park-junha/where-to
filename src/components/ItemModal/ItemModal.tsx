@@ -12,7 +12,7 @@ interface Props {
   hideModal: () => void;
   removePortal: () => void;
   submitForm: (portal: NewPortalForm) => Promise<string>;
-  mode: string;
+  mode: 'create' | 'edit';
   initialFormValues?: NewPortalForm;
 }
 
@@ -22,7 +22,7 @@ interface State {
 
 export default class ItemModal extends Component<Props, State> {
   state: State = {
-    portalType: PORTAL_TYPES[0].name ?? 'N/A'
+    portalType: PORTAL_TYPES[0].name
   };
 
   renderOptions = (): JSX.Element => {
@@ -60,7 +60,7 @@ export default class ItemModal extends Component<Props, State> {
         return <h4>Edit Portal</h4>;
       // Should never get to this point
       default:
-        throw new Error('this.props.mode has an invalid value');
+        throw new Error('Internal error: ItemModal');
     }
   };
 
@@ -70,9 +70,9 @@ export default class ItemModal extends Component<Props, State> {
         return 'Create';
       case 'edit':
         return 'Save';
-      //  should never get to this point
+      // Should never get to this point
       default:
-        return 'Submit';
+        throw new Error('Internal error: ItemModal');
     }
   };
 

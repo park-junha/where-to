@@ -65,7 +65,6 @@ export default class ShortcutOptions extends Component<Props, State> {
         ...prevState,
         submitError: err
       }));
-      console.error(err);
     });
   };
 
@@ -79,7 +78,6 @@ export default class ShortcutOptions extends Component<Props, State> {
             <Form.Control
               placeholder='Enter name'
               name='title'
-              data-testid='title'
               value={this.state.title}
               onChange={this.handleChange}
             />
@@ -87,9 +85,8 @@ export default class ShortcutOptions extends Component<Props, State> {
           <Form.Group controlId='formPortalUrl'>
             <Form.Label>URL</Form.Label>
             <Form.Control
-              placeholder='Enter URL of portal destination'
+              placeholder='Enter URL'
               name='url'
-              data-testid='url'
               value={this.state.url}
               onChange={this.handleChange}
             />

@@ -17,12 +17,12 @@ interface Props {
 }
 
 interface State {
-  currentTab: string;
+  currentTab: 'general' | 'transfer' | 'load' | 'reset';
 }
 
 export default class SettingsModal extends Component<Props, State> {
   state: State = {
-    currentTab: SETTINGS_TABS[0].name
+    currentTab: 'general' // SETTINGS_TABS[0].name
   };
 
   renderOptions = (): JSX.Element => {
@@ -40,19 +40,15 @@ export default class SettingsModal extends Component<Props, State> {
       return (
         <LoadTab
           loadContents={this.props.loadContents}
-        >
-        </LoadTab>
+        />
       );
     case 'reset':
       return (
         <ConfirmReset
           hideModal={this.props.hideModal}
           resetPortals={this.props.resetPortals}
-        >
-        </ConfirmReset>
+        />
       );
-    default:
-      throw new Error('this.state.currentTab has an invalid value');
     }
   };
 

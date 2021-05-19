@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { FormControl, Button } from 'react-bootstrap';
+import { FormControl, Button, Alert } from 'react-bootstrap';
+import runMigration from '../../utils/runMigration';
+import { validateAllPortalsFromStr } from '../../utils/validatePortal';
 
 interface Props {
   loadContents: () => void;
@@ -7,6 +9,7 @@ interface Props {
 
 interface State {
   contentsToLoad: string;
+  submitError: string;
 }
 
 export default class LoadTab extends Component<Props, State> {
@@ -16,7 +19,8 @@ export default class LoadTab extends Component<Props, State> {
   };
 
   state: State = {
-    contentsToLoad: ''
+    contentsToLoad: '',
+    submitError: ''
   };
 
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -34,8 +38,18 @@ export default class LoadTab extends Component<Props, State> {
   };
 
   submitForm = (): void => {
-    localStorage.setItem('contentsMain', this.state.contentsToLoad);
-    this.props.loadContents();
+    validateAllPortalsFromStr(this.state.contentsToLoad)
+    .then(() => {
+      localStorage.setItem('contentsMain', this.state.contentsToLoad);
+      runMigration();
+      this.props.loadContents();
+    })
+    .catch((err) => {
+      this.setState(prevState => ({
+        ...prevState,
+        submitError: err
+      }));
+    });
   };
 
   render (): JSX.Element {
@@ -61,6 +75,13 @@ export default class LoadTab extends Component<Props, State> {
         >
           Load Data
         </Button>
+        <Alert
+          id='item-modal-alert'
+          show={this.state.submitError !== ''}
+          variant='danger'
+        >
+          {this.state.submitError}
+        </Alert>
       </>
     );
   };
