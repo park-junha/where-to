@@ -130,6 +130,17 @@ code {
   margin-top: 16px;
 }
 
+/* Transfer tab clipboard button & span styles */
+#transfer-tab-copy-button {
+  display: inline;
+}
+
+#transfer-tab-copied-label {
+  padding: 6px 12px;
+  vertical-align: middle;
+  display: inline;
+}
+
 /* Footer */
 .footer-custom {
   padding: 6px 12px;

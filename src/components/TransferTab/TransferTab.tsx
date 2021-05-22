@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
-import { FormControl } from 'react-bootstrap';
+import { FormControl, Button } from 'react-bootstrap';
 
-export default class TransferTab extends Component {
+interface State {
+  contents: string;
+  copied: boolean;
+}
+
+export default class TransferTab extends Component<{}, State> {
+  state: State = {
+    contents: localStorage.getItem('contentsMain') ?? '',
+    copied: false
+  };
+
+  copyToClipboard = (): void => {
+    navigator.clipboard.writeText(this.state.contents).then(() => {
+      this.setState({
+        copied: true
+      });
+    });
+  };
+
   render (): JSX.Element {
     return (
       <>
@@ -15,8 +33,26 @@ export default class TransferTab extends Component {
             height: '16em'
           }}
           disabled
-          defaultValue={localStorage.getItem('contentsMain') ?? ''}
+          defaultValue={this.state.contents}
         />
+        <span>
+          <Button
+            variant='primary'
+            className='horiz-spaced-buttons'
+            id='transfer-tab-copy-label'
+            onClick={this.copyToClipboard}
+          >
+            Copy to Clipboard
+          </Button>
+          <span
+            id='transfer-tab-copied-label'
+            style={{
+              display: this.state.copied ? 'inline' : 'none'
+            }}
+          >
+            Copied!
+          </span>
+        </span>
       </>
     );
   };
