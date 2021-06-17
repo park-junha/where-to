@@ -24,8 +24,6 @@ yarn install
 yarn start
 ```
 
-This app was developed with `node v14.4.0` and `yarn 1.22.10`.
-
 ## Install Locally
 
 ### Google Chrome
