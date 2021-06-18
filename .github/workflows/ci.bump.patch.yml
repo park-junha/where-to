@@ -1,0 +1,26 @@
+name: CI, Bump Patch
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  bump-patch:
+    if: github.event.issue.pull_request #&& contains(github.event.comment.body, '!bump patch') 
+    runs-on: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2.2.0
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v1
+      with:
+        node-version: [14.x]
+    - name: Bump patch version
+      run: yarn bump patch
+    - name: Commit
+      uses: EndBug/add-and-commit@v7
+      with:
+        message: 'Bump patch version'
+        add: '["package.json", "public/manifest.json", "src/models.constants.ts"]'
+        pull_strategy: '--rebase'
