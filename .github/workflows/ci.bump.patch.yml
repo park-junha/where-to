@@ -1,4 +1,4 @@
-name: CI, Bump Patch
+name: CI, Bump Patch Version
 
 on:
   issue_comment:
