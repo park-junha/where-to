@@ -74,6 +74,7 @@ class App extends Component<Props, State> {
         <EditPortals
           contents={this.state.contents.main}
           editPortals={this.editPortals}
+          clonePortal={this.clonePortal}
           editPortal={this.editPortal}
           portalSize={this.state.contents.settings.portalSize}
           removePortal={this.removePortal}
@@ -193,6 +194,29 @@ class App extends Component<Props, State> {
         ...prevState.contents,
         main: [
           ...prevState.contents.main.slice(0, index),
+          {
+            ...portal,
+            id: v4()
+          },
+          ...prevState.contents.main.slice(index + 1)
+        ]
+      }
+    }), this.saveCurrentState);
+  };
+
+  clonePortal = (idToEdit: string, portal: NewPortalForm): void => {
+    const index = this.state.contents.main.findIndex(i =>
+      i.id === idToEdit);
+    if (index === -1) {
+      console.error('Error: Could not clone portal.');
+      return;
+    };
+    this.setState(prevState => ({
+      ...prevState,
+      contents: {
+        ...prevState.contents,
+        main: [
+          ...prevState.contents.main.slice(0, index + 1),
           {
             ...portal,
             id: v4()

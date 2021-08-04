@@ -24,6 +24,10 @@ export interface NewPortalForm {
   url: string;
 };
 
+export interface PortalFormOptions {
+  clone?: boolean;
+};
+
 // FooterLayout is deprecated
 export interface FooterLayout extends Array<FooterItem>{};
 

@@ -4,6 +4,10 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 import { PortalFormType } from '../../models/enums';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 describe('App (integration)', () => {
   it('should throw correct error on portal form with missing title',
     async function() {
@@ -190,7 +194,7 @@ describe('App (e2e)', () => {
     expect(googlePortal).toBeInTheDocument();
   });
 
-  it('can create portal', () => {
+  it('can create portal', async () => {
     const {
       queryByPlaceholderText,
       queryByText,
@@ -217,17 +221,19 @@ describe('App (e2e)', () => {
     const createButton = queryByText(/^Create/);
     fireEvent.click(createButton);
 
+    // Sleep for 0.5s
+    await sleep(500);
+
     // Validate
     const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
-    // TODO: test fails when below is enabled, potential bug...
-//  expect(storageData.length).toEqual(2);
-//  expect(storageData[1].title).toEqual('New shortcut');
-//  expect(storageData[1].url).toEqual('about:blank');
+    expect(storageData.length).toEqual(2);
+    expect(storageData[1].title).toEqual('New shortcut');
+    expect(storageData[1].url).toEqual('about:blank');
     const portalAfterEdit = queryByText(/^New shortcut$/);
-    expect(portalAfterEdit).not.toBeInTheDocument();
+    expect(portalAfterEdit).toBeInTheDocument();
   });
 
-  it('can edit portal', () => {
+  it('can edit portal', async () => {
     const {
       queryByDisplayValue,
       queryByText,
@@ -258,14 +264,70 @@ describe('App (e2e)', () => {
     const saveButton = queryByText(/^Save/);
     fireEvent.click(saveButton);
 
+    // Sleep for 0.5s
+    await sleep(500);
+
     // Validate
     const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
     expect(storageData.length).toEqual(1);
-    // TODO: test fails when below is enabled, potential bug...
-//  expect(storageData[0].title).toEqual('E2E');
-//  expect(storageData[0].url).toEqual('about:blank');
+    expect(storageData[0].title).toEqual('E2E');
+    expect(storageData[0].url).toEqual('about:blank');
+    const portalBeforeEdit = queryByText(/^E2E Sample Data$/);
     const portalAfterEdit = queryByText(/^E2E$/);
-    expect(portalAfterEdit).not.toBeInTheDocument();
+    expect(portalBeforeEdit).not.toBeInTheDocument();
+    expect(portalAfterEdit).toBeInTheDocument();
+  });
+
+  it('can clone portal', async () => {
+    const {
+      queryAllByText,
+      queryByDisplayValue,
+      queryByText,
+      queryByTestId
+    } = render(<App renderVisuals={false} />);
+
+    // Enable edit mode
+    const editButton = queryByTestId('footer-button-edit');
+    fireEvent.click(editButton);
+
+    // Click portal
+    const portal = queryByText(/E2E Sample Data/);
+    fireEvent.click(portal);
+
+    // Click clone tab button
+    const cloneTab = queryByText(/Clone/);
+    fireEvent.click(cloneTab);
+
+    // Fill out form and submit
+    const nameField = queryByDisplayValue('E2E Sample Data');
+    const urlField = queryByDisplayValue('chrome://extensions');
+    fireEvent.change(nameField, {
+      target: {
+        value: 'E2E Cloned Data'
+      }
+    });
+    fireEvent.change(urlField, {
+      target: {
+        value: 'about:blank'
+      }
+    });
+    const saveButton = queryAllByText(/Clone/)[1];
+    fireEvent.click(saveButton);
+
+    // Sleep for 0.5s
+    await sleep(500);
+
+    // Validate
+    const storageData = JSON.parse(localStorage.__STORE__.contentsMain);
+    expect(storageData.length).toEqual(2);
+    expect(storageData[0].title).toEqual('E2E Sample Data');
+    expect(storageData[0].url).toEqual('chrome://extensions');
+    expect(storageData[1].title).toEqual('E2E Cloned Data');
+    expect(storageData[1].url).toEqual('about:blank');
+    const firstPortal = queryByText(/E2E Sample Data/);
+    const clonedPortal = queryByText(/E2E Cloned Data/);
+    expect(firstPortal).toBeInTheDocument();
+    expect(clonedPortal).toBeInTheDocument();
   });
 
   it('can remove portal', () => {
