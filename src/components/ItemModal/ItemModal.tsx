@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, ButtonGroup } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 
-import { NewPortalForm } from '../../models/interfaces';
+import { NewPortalForm, PortalFormOptions } from '../../models/interfaces';
 import { PORTAL_TYPES } from '../../models/constants';
 import ConfirmRemove from '../ConfirmRemove/ConfirmRemove';
 import ShortcutOptions from '../ShortcutOptions/ShortcutOptions';
@@ -11,7 +11,8 @@ interface Props {
   showModal: boolean;
   hideModal: () => void;
   removePortal: () => void;
-  submitForm: (portal: NewPortalForm) => Promise<string>;
+  submitForm: (portal: NewPortalForm, options?: PortalFormOptions) =>
+    Promise<string>;
   mode: 'create' | 'edit';
   initialFormValues?: NewPortalForm;
 }
@@ -31,6 +32,16 @@ export default class ItemModal extends Component<Props, State> {
       return (
         <ShortcutOptions
           submitForm={this.props.submitForm}
+          hideModal={this.props.hideModal}
+          submitLabel={this.submitLabel()}
+          initialFormValues={this.props.initialFormValues ?? undefined}
+        />
+      );
+    case 'clone':
+      return (
+        <ShortcutOptions
+          submitForm={this.props.submitForm}
+          submitFormOptions={{clone: true}}
           hideModal={this.props.hideModal}
           submitLabel={this.submitLabel()}
           initialFormValues={this.props.initialFormValues ?? undefined}
@@ -58,9 +69,8 @@ export default class ItemModal extends Component<Props, State> {
         return <h4>Add New Portal</h4>;
       case 'edit':
         return <h4>Edit Portal</h4>;
-      // Should never get to this point
       default:
-        throw new Error('Internal error: ItemModal');
+        throw new Error('Invalid ItemModal mode state');
     }
   };
 
@@ -69,11 +79,33 @@ export default class ItemModal extends Component<Props, State> {
       case 'create':
         return 'Create';
       case 'edit':
-        return 'Save';
-      // Should never get to this point
+        return this.state.portalType === 'clone' ? 'Clone' : 'Save';
       default:
-        throw new Error('Internal error: ItemModal');
+        throw new Error('Invalid ItemModal mode state');
     }
+  };
+
+  renderCloneIfEdit = (): JSX.Element => {
+    if (this.props.mode === 'edit') {
+      return (
+        <ToggleButton
+          key={-2}
+          type='radio'
+          variant='secondary'
+          name='portal'
+          value='clone'
+          checked={this.state.portalType === 'clone'}
+          onChange={(event: React.ChangeEvent<any>) =>
+            this.setState({
+              portalType: event.currentTarget.value
+            })
+          }
+        >
+          Clone
+        </ToggleButton>
+      );
+    }
+    return <></>;
   };
 
   renderDeleteIfEdit = (): JSX.Element => {
@@ -136,6 +168,7 @@ export default class ItemModal extends Component<Props, State> {
                 {portal.title}
               </ToggleButton>
             ))}
+            {this.renderCloneIfEdit()}
             {this.renderDeleteIfEdit()}
           </ButtonGroup>
           <p />

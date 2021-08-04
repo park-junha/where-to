@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
-import { NewPortalForm } from '../../models/interfaces';
+import { NewPortalForm, PortalFormOptions } from '../../models/interfaces';
 
 interface Props {
-  submitForm: (portal: NewPortalForm) => Promise<string>;
+  submitForm: (portal: NewPortalForm, options?: PortalFormOptions) =>
+    Promise<string>;
+  submitFormOptions?: PortalFormOptions;
   submitLabel: string;
   hideModal: () => void;
   initialFormValues?: NewPortalForm;
@@ -56,7 +58,7 @@ export default class ShortcutOptions extends Component<Props, State> {
       title: this.state.title,
       type: 'shortcut',
       url: this.state.url
-    })
+    }, this.props.submitFormOptions)
     .then(() => {
       this.props.hideModal();
     })

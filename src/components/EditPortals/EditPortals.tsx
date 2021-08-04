@@ -4,7 +4,8 @@ import { ReactSortable } from 'react-sortablejs';
 
 import {
   LandingPageItems,
-  NewPortalForm
+  NewPortalForm,
+  PortalFormOptions
 } from '../../models/interfaces';
 import {
   PortalFormType
@@ -16,6 +17,7 @@ interface Props {
   contents: LandingPageItems;
   portalSize: number;
   editPortals: (newPortals: LandingPageItems) => void;
+  clonePortal: (idToEdit: string, portal: NewPortalForm) => void;
   editPortal: (idToEdit: string, portal: NewPortalForm) => void;
   removePortal: (id: string) => void;
   validatePortalForm: (portal: NewPortalForm, formType: PortalFormType)
@@ -54,11 +56,14 @@ export default class EditPortals extends Component<Props, State> {
     this.hideModal();
   };
 
-  editPortal = (portal: NewPortalForm): Promise<string> => {
+  editPortal = (portal: NewPortalForm, options?: PortalFormOptions):
+    Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       this.props.validatePortalForm(portal, PortalFormType.edit)
         .then(() => {
-          this.props.editPortal(this.state.idToEdit ?? '', portal);
+          options?.clone === true ?
+            this.props.clonePortal(this.state.idToEdit ?? '', portal) :
+            this.props.editPortal(this.state.idToEdit ?? '', portal);
           this.hideItemModal();
           resolve('');
         })
