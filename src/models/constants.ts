@@ -1,8 +1,9 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '1.5.0';
+export const VERSION = '1.5.1';
+export const NEED_MIGRATION_IF_BEFORE = '1.5.1';
 
-export const MAX_PORTALS = 30;
+export const MAX_PORTALS = 100;
 
 export const DEFAULT_PORTAL_SIZE = 60; // 244px x 120px
 export const ABSOLUTE_PORTAL_MIN_SIZE = 30; // 184px x 60px
