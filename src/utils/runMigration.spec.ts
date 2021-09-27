@@ -5,6 +5,18 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
+it('should increase max number of portals to 100 if under v1.6.0', () => {
+  // Setup
+  const settingsToMigrate = { maxPortals: 30 };
+  localStorage.__STORE__['settings'] = JSON.stringify(settingsToMigrate);
+
+  runMigration()
+
+  // Validate local storage
+  const results = JSON.parse(localStorage.__STORE__['settings']);
+  expect(results.maxPortals).toBe(100);
+});
+
 it('should migrate webportal to shortcut', () => {
   // Setup
   const contentToMigrate = [
