@@ -11,7 +11,7 @@ it('should return true for major version 0', () => {
   expect(needsMigrationSince('0.50.0')).toBe(true);
 });
 
-it('should return true for versions < 1.6.0', () => {
+it('should return true for versions < 1.5.1', () => {
   expect(needsMigrationSince('1.3.0')).toBe(true);
   expect(needsMigrationSince('1.3.1')).toBe(true);
   expect(needsMigrationSince('1.4.0')).toBe(true);
