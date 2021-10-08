@@ -27,10 +27,14 @@ code {
   margin: 8px 8px 75px 8px;
 }
 
-.new-item-modal {
-  background-color: rgba(0, 0, 0, 0.9) !important;
-  border-color: #2a2a2a;
-  color: #fff;
+.modal-content {
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  .new-item-modal {
+    border-color: white;
+    color: white;
+  }
 }
 
 /* Landing page big button */

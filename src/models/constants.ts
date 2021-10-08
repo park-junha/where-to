@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-export const VERSION = '1.5.2';
+export const VERSION = '1.5.3';
 export const NEED_MIGRATION_IF_BEFORE = '1.5.1';
 
 export const MAX_PORTALS = 100;
