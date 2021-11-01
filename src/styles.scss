@@ -27,25 +27,43 @@ code {
   margin: 8px 8px 75px 8px;
 }
 
+/* Modal backdrop blur */
+.modal {
+  backdrop-filter: blur(2px);
+}
+
+/* Modal styles */
 .modal-content {
-  border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
+  transition: border 0.3s, background-color 0.3s;
 
   .new-item-modal {
-    border-color: white;
+    border-color: rgba(255, 255, 255, 0.6);
+    transition: border-color 0.3s;
     color: white;
+  }
+
+  &:hover {
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.9);
+
+    .new-item-modal {
+      border-color: white;
+    }
   }
 }
 
 /* Landing page big button */
 .landing-button-big {
   margin: 2px;
+
   background-color: rgba(0, 0, 0, 0.6) !important;
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
-}
 
-.landing-button-big:hover {
-  border: 1px solid white !important;
+  &:hover {
+    border: 1px solid white !important;
+  }
 }
 
 #portals-to-remove {
@@ -163,10 +181,10 @@ code {
   padding: 2px 9px 6px 9px;
   background-color: rgba(0, 0, 0, 0) !important;
   border: 1px solid rgba(255, 255, 255, 0);
-}
 
-.footer-button:hover {
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  &:hover {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
 }
 
 .footer-ioicon {
@@ -182,8 +200,8 @@ code {
   color: rgba(255, 255, 255, 0.4);
   transition: color 0.3s;
   text-decoration: none;
-}
 
-#footer-version:hover {
-  color: white;
+  &:hover {
+    color: white;
+  }
 }

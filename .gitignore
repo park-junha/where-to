@@ -10,8 +10,7 @@
 
 # production
 /build
-build.zip
-src.zip
+/artifacts
 
 # misc
 *.swp
